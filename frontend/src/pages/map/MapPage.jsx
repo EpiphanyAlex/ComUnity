@@ -24,7 +24,7 @@ function MapPage() {
       <h2>Map Page</h2>
 
       <LoadScript googleMapsApiKey="AIzaSyB4fl37yAX1fkS5sygBBkMDYOK2eHS-32M">
-      {/* <LoadScript googleMapsApiKey="AIzaSyBkf5ewpMfSbG53sjmBiEnGxC0vGgZ_qmM"> */}
+      
 
         <GoogleMap
           mapContainerStyle={containerStyle}
