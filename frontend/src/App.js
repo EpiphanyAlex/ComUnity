@@ -3,8 +3,8 @@ import './App.css';
 
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import Home from './pages/home'
 import MapPage from './pages/map/MapPage';
 
 function App() {
@@ -31,7 +31,10 @@ function App() {
       </header> */}
       <Container className="mt-4">
         <Routes>
-          <Route path="/" element={<h2>Welcome to Home Page</h2>} />
+          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/home" element={
+            <Home />
+          } />
           <Route path="/map" element={<MapPage />} />
         </Routes>
       </Container>
