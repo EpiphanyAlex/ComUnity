@@ -12,7 +12,7 @@ function App() {
     
     <div className="App">
           <div>
-      <Navigation />
+      {/* <Navigation /> */}
       {/* Add your routes or components here */}
     </div>
       {/* <header className="App-header">
@@ -42,21 +42,21 @@ function App() {
   );
 }
 
-function Navigation() {
-  return (
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand as={Link} to="/">Kids Connect</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/map">Map</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-  );
-}
+// function Navigation() {
+//   return (
+//     <Navbar bg="light" expand="lg">
+//       <Container>
+//         <Navbar.Brand as={Link} to="/">Kids Connect</Navbar.Brand>
+//         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+//         <Navbar.Collapse id="basic-navbar-nav">
+//           <Nav className="me-auto">
+//             <Nav.Link as={Link} to="/">Home</Nav.Link>
+//             <Nav.Link as={Link} to="/map">Map</Nav.Link>
+//           </Nav>
+//         </Navbar.Collapse>
+//       </Container>
+//     </Navbar>
+//   );
+// }
 
 export default App;
