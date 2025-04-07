@@ -4,7 +4,7 @@ import '../../css/ChartPageCss.css'; // import custom styles
 
 const ChartPage = () => {
     const [messages, setMessages] = useState([
-        { sender: 'bot', text: 'Hello! i am your friend tom. how is your day?' }
+        { sender: 'bot', text: 'Hello! How can I help you today?' }
       ]);
       const [input, setInput] = useState('');
       const [isThinking, setIsThinking] = useState(false);

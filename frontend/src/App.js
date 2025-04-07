@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 import MapPage from './pages/map/MapPage';
 import ChartPage from './pages/chart/ChartPage';
+
 function App() {
   return (
     
