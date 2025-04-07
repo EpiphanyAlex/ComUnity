@@ -7,4 +7,5 @@ Werkzeug==3.0.1
 gunicorn==21.2.0
 pytest==8.0.0
 black==24.1.1
-flake8==7.0.0 
+flake8==7.0.0
+openai==1.10.0 

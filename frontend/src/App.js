@@ -6,7 +6,8 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 import MapPage from './pages/map/MapPage';
-import ChartPage from './pages/chart/ChartPage';
+import ChatPage from './pages/chat/ChatPage';
+
 function App() {
   return (
     
@@ -33,7 +34,7 @@ function App() {
         <Routes>
           <Route path="/" element={<h2>Welcome to Home Page</h2>} />
           <Route path="/map" element={<MapPage />} />
-          <Route path="/chart" element={<ChartPage />} />
+          <Route path="/chat" element={<ChatPage />} />
         </Routes>
       </Container>
     </div>
@@ -50,7 +51,7 @@ function Navigation() {
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="/map">Map</Nav.Link>
-            <Nav.Link as={Link} to="/chart">Chart</Nav.Link>
+            <Nav.Link as={Link} to="/chat">Chat</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

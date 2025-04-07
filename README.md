@@ -1,6 +1,69 @@
-# KidsConnect Melbourne
+# CommuniTeens
 
-A platform designed to strengthen community connections for kids in Melbourne, addressing social isolation through engaging activities and community events.
+A web application designed to strengthen community connections for teenagers (12-18) in Melbourne, Australia. The goal is to address social isolation by providing resources, events, and a chat interface to help teenagers connect with their community.
+
+## Features
+
+- Interactive chat with a Melbourne Community Helper bot
+- Information about local events and resources
+- Recommendations for activities
+- Support for dealing with social isolation
+
+## Project Structure
+
+```
+CommuniTeens/
+├── frontend/          # React.js web application
+├── backend/           # Flask API server
+└── docs/              # Documentation
+```
+
+## Prerequisites
+
+- Node.js (v14+)
+- Python (v3.8+)
+- npm or yarn
+
+## Running the Frontend
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+This will start the React development server at http://localhost:3000.
+
+## Running the Backend
+
+First, install the required Python packages:
+
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Then, start the Flask server:
+
+```bash
+python app.py
+```
+
+The API server will run at http://localhost:5000.
+
+## API Endpoints
+
+- `POST /api/chat`: Chat with the Melbourne Community Helper
+  - Request body: `{ "message": "Your message here" }`
+  - Response: `{ "response": "Bot's response here" }`
+
+## Technologies Used
+
+- Frontend: React.js, React Bootstrap
+- Backend: Flask
+- AI: OpenAI API
 
 ## Project Overview
 
