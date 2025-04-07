@@ -33,7 +33,7 @@ function App() {
       </header> */}
       <Container className="mt-4">
         <Routes>
-          <Route path="/" element={<h2>Welcome to Home Page</h2>} />
+          <Route path="/" element={<Home />} />
           <Route path="/home" element={
             <Home />
           } />
