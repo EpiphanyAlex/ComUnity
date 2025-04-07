@@ -1,8 +1,8 @@
 from flask import Flask
 from .models.models import db, Playground
-
 from config.db_config import SQLALCHEMY_DATABASE_URI
-from routes.main import main
+from main import main, fetch_and_insert_playgrounds
+
 
 def create_app():
     app = Flask(__name__)
@@ -14,5 +14,6 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+        fetch_and_insert_playgrounds()  # Auto-load playgrounds on startup
 
     return app
