@@ -14,3 +14,10 @@ class Playground(db.Model):
     lon = db.Column(db.Float)
     geo_shape = db.Column(db.JSON)  # requires MySQL 5.7+ for JSON support
 
+class MelFeature(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    theme = db.Column(db.String(100))
+    sub_theme = db.Column(db.String(100))
+    feature_name = db.Column(db.String(200))
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
