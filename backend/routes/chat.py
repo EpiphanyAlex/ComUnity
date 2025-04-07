@@ -10,7 +10,7 @@ load_dotenv()
 chat_bp = Blueprint('chat', __name__)
 
 # OpenAI API key
-api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("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")
 client = OpenAI(api_key=api_key)
 
 # System message for the chatbot
