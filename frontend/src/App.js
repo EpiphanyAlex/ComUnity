@@ -9,15 +9,12 @@ import MapPage from './pages/map/MapPage';
 import EducationList from './pages/home/education-list';
 import ArticleDetail from './pages/home/education-detail';
 import ChatPage from './pages/chat/ChatPage';
+import Header from './pages/home/header';
 
 function App() {
   return (
-    
     <div className="App">
-          <div>
-      {/* <Navigation /> */}
-      {/* Add your routes or components here */}
-    </div>
+      <Header />
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -32,7 +29,7 @@ function App() {
           Learn React
         </a>
       </header> */}
-      <Container className="mt-4">
+      <Container className="mt-4" style={{ paddingTop: '70px' }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={
@@ -49,24 +46,6 @@ function App() {
         </Routes>
       </Container>
     </div>
-  );
-}
-
-function Navigation() {
-  return (
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand as={Link} to="/">Kids Connect</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/map">Map</Nav.Link>
-            <Nav.Link as={Link} to="/chat">Chat</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
   );
 }
 

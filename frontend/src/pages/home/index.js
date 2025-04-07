@@ -1,13 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./index.css"
-import Header from "./header"
 import Footer from './footer'
+import { Link } from 'react-router-dom'
 
 const ComUnityWebsite = () => {
   return (
     <>
-      <Header />
-
       <section className="hero-section"
         style={{ 
           backgroundImage: "url(/hero-bg.png)",
@@ -104,9 +102,9 @@ const ComUnityWebsite = () => {
                 took a galley of type and scrambled it to make a type specimen book. It has survived not only five
                 centuries.
               </p>
-              <a href="#" className="btn btn-success">
-                Click
-              </a>
+              <Link to="/chat" className="btn btn-success">
+                Chat Now
+              </Link>
             </div>
             <div className="col-lg-5">
               <div className="circular-image green-bg">
@@ -162,9 +160,9 @@ const ComUnityWebsite = () => {
                 took a galley of type and scrambled it to make a type specimen book. It has survived not only five
                 centuries.
               </p>
-              <a href="#" className="btn btn-primary">
-                Click
-              </a>
+              <Link to="/map" className="btn btn-primary">
+                View Map
+              </Link>
             </div>
           </div>
         </div>
