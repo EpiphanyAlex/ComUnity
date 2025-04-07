@@ -3,7 +3,6 @@ import "./index.css"
 import Header from "./header"
 import Footer from './footer'
 
-// 主组件
 const ComUnityWebsite = () => {
   return (
     <>

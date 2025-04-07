@@ -6,6 +6,8 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import Home from './pages/home'
 import MapPage from './pages/map/MapPage';
+import EducationList from './pages/home/education-list';
+import ArticleDetail from './pages/home/education-detail';
 
 function App() {
   return (
@@ -31,9 +33,15 @@ function App() {
       </header> */}
       <Container className="mt-4">
         <Routes>
-          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/" element={<h2>Welcome to Home Page</h2>} />
           <Route path="/home" element={
             <Home />
+          } />
+          <Route path="/education-list" element={
+            <EducationList />
+          } />
+          <Route path="/education-detail" element={
+            <ArticleDetail />
           } />
           <Route path="/map" element={<MapPage />} />
         </Routes>
@@ -41,6 +49,7 @@ function App() {
     </div>
   );
 }
+
 
 // function Navigation() {
 //   return (
