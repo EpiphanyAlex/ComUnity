@@ -8,6 +8,7 @@ import Home from './pages/home'
 import MapPage from './pages/map/MapPage';
 import EducationList from './pages/home/education-list';
 import ArticleDetail from './pages/home/education-detail';
+import ChatPage from './pages/chat/ChatPage';
 
 function App() {
   return (
@@ -44,28 +45,29 @@ function App() {
             <ArticleDetail />
           } />
           <Route path="/map" element={<MapPage />} />
+          <Route path="/chat" element={<ChatPage />} />
         </Routes>
       </Container>
     </div>
   );
 }
 
-
-// function Navigation() {
-//   return (
-//     <Navbar bg="light" expand="lg">
-//       <Container>
-//         <Navbar.Brand as={Link} to="/">Kids Connect</Navbar.Brand>
-//         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-//         <Navbar.Collapse id="basic-navbar-nav">
-//           <Nav className="me-auto">
-//             <Nav.Link as={Link} to="/">Home</Nav.Link>
-//             <Nav.Link as={Link} to="/map">Map</Nav.Link>
-//           </Nav>
-//         </Navbar.Collapse>
-//       </Container>
-//     </Navbar>
-//   );
-// }
+function Navigation() {
+  return (
+    <Navbar bg="light" expand="lg">
+      <Container>
+        <Navbar.Brand as={Link} to="/">Kids Connect</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/">Home</Nav.Link>
+            <Nav.Link as={Link} to="/map">Map</Nav.Link>
+            <Nav.Link as={Link} to="/chat">Chat</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+}
 
 export default App;
