@@ -49,7 +49,6 @@ const ChatPage = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', // Include credentials if your backend expects them
         body: JSON.stringify({ 
           message: userInput,
           conversationId: conversationId 
