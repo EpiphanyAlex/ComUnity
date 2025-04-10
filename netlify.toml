@@ -1,9 +1,9 @@
 [build]
   base = "/"
-  publish = "frontend/public"
-  command = "cd frontend && npm install && npm start"
+  publish = "frontend/build"
+  command = "cd frontend && npm install && npm run build"
 
 [[redirects]]
   from = "/*"
-  to = "public/index.html"
+  to = "/index.html"
   status = 200

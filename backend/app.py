@@ -9,7 +9,11 @@ from routes.import_csv import csv_import
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)  # Enable CORS for all routes
+    CORS(app, origins=[
+        "https://comunityconnect.netlify.app",  # Your production Netlify app
+        "http://localhost:3000",                 # Local development
+        "http://127.0.0.1:3000"                  # Alternative local development
+    ])
     
     # Configure database
     app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
