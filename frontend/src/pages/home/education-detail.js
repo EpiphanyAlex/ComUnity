@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./index.css"
 import Header from "./header"
-import Footer from './footer'
+
 
 const ArticleDetail = () => {
   const [articleId, setArticleId] = useState(1)
@@ -246,7 +246,7 @@ const ArticleDetail = () => {
         </div>
       </section>
 
-      <Footer />
+
     </>
   )
 }

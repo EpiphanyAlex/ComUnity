@@ -1,22 +1,26 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./index.css"
-import Footer from './footer'
-import { Link } from 'react-router-dom'
+
 
 const ComUnityWebsite = () => {
   return (
     <>
+
       <section className="hero-section"
         style={{ 
           backgroundImage: "url(/hero-bg.png)",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          position: "relative"
+          position: "relative",
+          width: "100vw",
+          marginLeft: "calc(-50vw + 50%)",
+          left: 0,
+          right: 0
         }}
       >
         <div className="container-fluid p-0">
           <div className="row g-0">
-            <div className="col-md-12">
+            <div className="col-md-24">
               <div className="hero-content">
                 <div className="container">
                   <div className="row">
@@ -46,14 +50,18 @@ const ComUnityWebsite = () => {
               </div>
             </div>
             <div className="col-lg-7">
-              <h2 className="section-title">Explore the Events</h2>
-              <p className="section-text">
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
-                took a galley of type and scrambled it to make a type specimen book.
+              <h2 className="section-title">Find your vibe, not just events!!</h2>
+              <p className="section-text" style={{
+                textAlign: 'left'
+              }}>
+                Use our interactive map to explore teen-friendly hangouts and activities around you and connect with your community.
               </p>
-              <a href="#" className="btn btn-explore">
-                Explore
-              </a>
+              <div className="text-center mt-3">
+               <a href="/map" className="btn btn-explore" style={{ width: 200 }}>
+                 Explore
+               </a>
+              </div>
+
             </div>
           </div>
         </div>
@@ -91,20 +99,22 @@ const ComUnityWebsite = () => {
         </div>
       </section>
 
-
       <section className="talk-buddy py-5">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-7">
               <h2 className="section-title">Talk to Your Buddy!</h2>
-              <p className="section-text">
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
-                took a galley of type and scrambled it to make a type specimen book. It has survived not only five
-                centuries.
+              <p className="section-text" style={{
+                textAlign: 'left'
+              }}>
+              Chat or speak with your personal Al companion anytime you need to vent or unwind. It listens, understands, and suggests feel-good activities to help you recharge.
               </p>
-              <Link to="/chat" className="btn btn-success">
-                Chat Now
-              </Link>
+              <div className="text-center mt-3">
+               <a href="/chat" className="btn btn-success" style={{ width: 200 }}>
+                Click
+               </a>
+              </div>
+
             </div>
             <div className="col-lg-5">
               <div className="circular-image green-bg">
@@ -160,14 +170,13 @@ const ComUnityWebsite = () => {
                 took a galley of type and scrambled it to make a type specimen book. It has survived not only five
                 centuries.
               </p>
-              <Link to="/map" className="btn btn-primary">
-                View Map
-              </Link>
+              <a href="#" className="btn btn-primary">
+                Click
+              </a>
             </div>
           </div>
         </div>
       </section>
-    <Footer />
     </>
   )
 }
