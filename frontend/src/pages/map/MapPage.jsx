@@ -68,6 +68,42 @@ function MapPage() {
     }
   }, []);
 
+
+  const [playgrounds, setPlaygrounds] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/playgrounds")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("✅ Playground API data:", data);
+        setPlaygrounds(Array.isArray(data) ? data : []);
+      })
+      .catch((err) => {
+        console.error("❌ Failed to fetch playgrounds:", err);
+        setPlaygrounds([]);
+      });
+  }, []);
+  
+  const [features, setFeatures] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/features")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("✅ Mel features API data:", data);
+        setFeatures(Array.isArray(data) ? data : []);
+      })
+      .catch((err) => {
+        console.error("❌ Failed to fetch mel features:", err);
+        setFeatures([]);
+      });
+  }, []);
+  
+
+
+
+
+
   useEffect(() => {
     const defaultLocation = [145.119, -37.928]; // Clayton, VIC
 
@@ -338,8 +374,59 @@ function MapPage() {
                   isActive={activeFeature?.id === feature.id}
                   onClick={handleMarkerClick}
                 />
+
+
+
+                
               );
             })}
+                
+                {mapRef.current &&
+                  Array.isArray(playgrounds) &&
+                  playgrounds.map((pg) => (
+                    <Marker
+                      key={`pg-${pg.id}`}
+                      map={mapRef.current}
+                      feature={{
+                        id: `pg-${pg.id}`,
+                        geometry: { coordinates: [pg.longitude, pg.latitude] },
+                        properties: {
+                          mag: "PG",
+                          place: pg.name,
+                          description: pg.description || "",
+                          features: pg.features || "",
+                          address: pg.address || ""
+                        },
+                      }}
+                      isActive={activeFeature?.id === `pg-${pg.id}`}
+                      onClick={handleMarkerClick}
+                    />
+                  ))}
+
+
+
+
+
+                    {mapRef.current &&
+                      features.map((ft) => (
+                        <Marker
+                          key={`ft-${ft.id}`}
+                          map={mapRef.current}
+                          feature={{
+                            id: `ft-${ft.id}`,
+                            geometry: { coordinates: [ft.longitude, ft.latitude] },
+                            properties: {
+                              place: ft.feature_name,
+                              theme: ft.theme,
+                              sub_theme: ft.sub_theme,
+                            },
+                          }}
+                          isActive={activeFeature?.id === `ft-${ft.id}`}
+                          onClick={handleMarkerClick}
+                        />
+                      ))}
+
+
           {mapRef.current && (
             <Popup map={mapRef.current} activeFeature={activeFeature} />
           )}

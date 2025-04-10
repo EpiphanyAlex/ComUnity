@@ -1,11 +1,12 @@
 from flask import Flask
 from flask_cors import CORS
 import os
-from models.models import db, Playground, MelFeature
-from config.db_config import SQLALCHEMY_DATABASE_URI
-from routes.chat import chat_bp
-from routes.main import main
-from routes.import_csv import csv_import
+from backend.models.models import db, Playground, MelFeature
+from backend.config.db_config import SQLALCHEMY_DATABASE_URI
+from backend.routes.chat import chat_bp
+from backend.routes.main import main
+from backend.routes.import_csv import csv_import
+from backend.routes.playgrounds import playgrounds_bp
 
 def create_app():
     app = Flask(__name__)
@@ -26,7 +27,8 @@ def create_app():
     app.register_blueprint(chat_bp)
     app.register_blueprint(main)
     app.register_blueprint(csv_import)
-    
+    app.register_blueprint(playgrounds_bp)
+
     # Create database tables
     try:
         with app.app_context():
