@@ -11,7 +11,7 @@ import Events from './pages/home/events';
 import Header from './pages/home/header';
 import Footer from './pages/home/footer';
 import MapPage from './pages/map/MapPage'
-import Chat from './pages/chart/ChartPage'
+import Chat from './pages/chat/ChatPage'
 
 
 function App() {
