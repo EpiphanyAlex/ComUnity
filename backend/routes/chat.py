@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
@@ -23,48 +23,66 @@ Your goals are to:
 5. respond in a friendly, supportive manner, appropriate to the youth's language style
 6. refrain from discussing topics that are inappropriate for minors"""
 
-# Store conversation history in memory (this is a simple implementation, for production use a database)
-conversation_history = {}
-
 @chat_bp.route('/api/chat', methods=['POST'])
 def chat():
+    """
+    Main endpoint for the chat API that interfaces with the frontend.
+    Receives user messages and returns AI responses.
+    """
     try:
-        # Get user message and conversation ID from request
+        # Get data from request
         data = request.json
-        user_message = data.get('message', '')
-        conversation_id = data.get('conversationId', 'default')
         
-        if not user_message:
-            return jsonify({'error': 'No message provided'}), 400
+        # Check if messages format is provided (array of message objects)
+        if 'messages' in data:
+            messages = data.get('messages', [])
+            
+            # Ensure system message is included if not already present
+            if not any(msg.get('role') == 'system' for msg in messages):
+                messages.insert(0, {"role": "system", "content": SYSTEM_MESSAGE})
         
-        # Initialize conversation history if it doesn't exist
-        if conversation_id not in conversation_history:
-            conversation_history[conversation_id] = [
-                {"role": "system", "content": SYSTEM_MESSAGE}
+        # Check if simple message format is provided (single message + conversationId)
+        elif 'message' in data:
+            user_message = data.get('message', '')
+            conversation_id = data.get('conversationId', 'default')
+            
+            if not user_message:
+                return jsonify({'error': 'No message provided'}), 400
+                
+            # Create messages array with system message and user message
+            messages = [
+                {"role": "system", "content": SYSTEM_MESSAGE},
+                {"role": "user", "content": user_message}
             ]
+        else:
+            return jsonify({'error': 'No messages provided'}), 400
         
-        # Add user message to conversation history
-        conversation_history[conversation_id].append({"role": "user", "content": user_message})
-        
-        # Create a chat completion using the OpenAI API with the full conversation history
+        # Call OpenAI API
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=conversation_history[conversation_id],
-            max_tokens=1024
+            model="gpt-4o-mini",  # Using gpt-4o-mini model as specified
+            messages=messages,
+            max_tokens=1000,
+            temperature=0.7,
         )
         
         # Extract the assistant's message from the response
         assistant_message = response.choices[0].message.content
         
-        # Add assistant response to conversation history
-        conversation_history[conversation_id].append({"role": "assistant", "content": assistant_message})
-        
-        # Limit conversation history to prevent token limits (keep last 10 messages)
-        if len(conversation_history[conversation_id]) > 11:  # system message + 10 conversation turns
-            conversation_history[conversation_id] = [conversation_history[conversation_id][0]] + conversation_history[conversation_id][-10:]
-        
-        return jsonify({"response": assistant_message, "conversationId": conversation_id})
+        # Return standardized response format
+        return jsonify({
+            "response": assistant_message,  # For backward compatibility
+            "reply": assistant_message,     # New format
+            "usage": {
+                "prompt_tokens": response.usage.prompt_tokens,
+                "completion_tokens": response.usage.completion_tokens,
+                "total_tokens": response.usage.total_tokens
+            }
+        })
     
     except Exception as e:
-        print(f"Error: {str(e)}")
-        return jsonify({"error": str(e)}), 500 
+        return jsonify({"error": str(e)}), 500
+
+@chat_bp.route('/api/health', methods=['GET'])
+def health_check():
+    """Health check endpoint to verify the API is running"""
+    return jsonify({"status": "healthy"}) 
