@@ -25,3 +25,10 @@ def test_read():
             "description": result.description
         })
     return "⚠️ No records found."
+
+query = Blueprint('query', __name__)
+
+@query.route('/preview-melfeatures')
+def preview_melfeatures():
+    df = pd.read_sql_table('MelFeature', con=db.engine)
+    return df.head().to_json()
