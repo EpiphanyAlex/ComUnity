@@ -15,6 +15,8 @@ def create_app():
         "http://localhost:3000",                # Local development (React default)
         "http://127.0.0.1:3000",                # Alternative local address
     ])
+
+    # CORS(app)
     
     # Configure database
     app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
