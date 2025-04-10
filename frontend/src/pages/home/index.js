@@ -29,7 +29,7 @@ const ComUnityWebsite = () => {
                         <h1>
                           Free and fun education
                           <br />
-                          for all children
+                          for all teenagers
                         </h1>
                       </div>
                     </div>

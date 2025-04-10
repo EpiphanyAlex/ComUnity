@@ -5,7 +5,7 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
