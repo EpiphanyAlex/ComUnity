@@ -8,7 +8,8 @@ gunicorn==21.2.0
 pytest==8.0.0
 black==24.1.1
 flake8==7.0.0
-openai==1.10.0
+openai==1.72.0
 pymysql==1.1.0
 pandas==2.2.0
-SQLAlchemy==2.0.27 
+SQLAlchemy==2.0.27
+requests==2.31.0 

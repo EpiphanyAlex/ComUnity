@@ -7,12 +7,13 @@ from routes.chat import chat_bp
 from routes.main import main
 from routes.import_csv import csv_import
 
+
 def create_app():
     app = Flask(__name__)
     CORS(app, origins=[
         "https://comunityconnect.netlify.app",  # Your production Netlify app
-        "http://localhost:3000",                 # Local development
-        "http://127.0.0.1:3000"                  # Alternative local development
+        "http://localhost:3000",                # Local development (React default)
+        "http://127.0.0.1:3000",                # Alternative local address
     ])
     
     # Configure database
