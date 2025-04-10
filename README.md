@@ -1,4 +1,4 @@
-# CommuniTeens
+# ComUnity
 
 A web application designed to strengthen community connections for teenagers (12-18) in Melbourne, Australia. The goal is to address social isolation by providing resources, events, and a chat interface to help teenagers connect with their community.
 
@@ -12,7 +12,7 @@ A web application designed to strengthen community connections for teenagers (12
 ## Project Structure
 
 ```
-CommuniTeens/
+ComUnity/
 ├── frontend/          # React.js web application
 ├── backend/           # Flask API server
 └── docs/              # Documentation
@@ -67,7 +67,7 @@ The API server will run at http://localhost:5000.
 
 ## Project Overview
 
-KidsConnect Melbourne is a web application that helps children in Melbourne build meaningful social connections within their community. The platform focuses on creating opportunities for kids to interact, participate in group activities, and develop strong community bonds.
+ComUnity is a web application that helps teenagers in Melbourne build meaningful social connections within their community. The platform focuses on creating opportunities for teens to interact, participate in group activities, and develop strong community bonds.
 
 ### Tech Stack
 
@@ -79,7 +79,7 @@ KidsConnect Melbourne is a web application that helps children in Melbourne buil
 ## Project Structure
 
 ```
-├── frontend/         # React Frondend
+├── frontend/         # React Frontend
 │   ├── public/
 │   └── src/
 │       ├── components/

@@ -1,12 +1,12 @@
 from flask import Blueprint, request, jsonify
-import pandas as pd
 from models.models import db, Playground
+import pandas as pd
 import io
 
 csv_import = Blueprint('csv_import', __name__)
 
-@csv_import.route('/import/playgrounds', methods=['POST'])
-def import_playgrounds():
+@csv_import.route('/import-csv', methods=['POST'])
+def import_playground_csv():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 400
     
@@ -14,27 +14,27 @@ def import_playgrounds():
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
     
-    if file and file.filename.endswith('.csv'):
-        try:
-            stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
-            df = pd.read_csv(stream)
-            
-            # Assuming CSV has columns: name, description, location, latitude, longitude
-            for _, row in df.iterrows():
-                playground = Playground(
-                    name=row['name'],
-                    description=row.get('description', None),
-                    location=row.get('location', None),
-                    latitude=row.get('latitude', None),
-                    longitude=row.get('longitude', None)
-                )
-                db.session.add(playground)
-            
-            db.session.commit()
-            return jsonify({'message': f'Successfully imported {len(df)} playgrounds'}), 201
-        
-        except Exception as e:
-            db.session.rollback()
-            return jsonify({'error': str(e)}), 500
+    if not file.filename.endswith('.csv'):
+        return jsonify({'error': 'File must be a CSV'}), 400
     
-    return jsonify({'error': 'File must be a CSV'}), 400 
+    try:
+        # Read the uploaded file
+        stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
+        csv_data = pd.read_csv(stream)
+        
+        # Process the CSV data
+        for _, row in csv_data.iterrows():
+            playground = Playground(
+                name=row.get('name'),
+                latitude=row.get('latitude'),
+                longitude=row.get('longitude'),
+                address=row.get('address', '')
+            )
+            db.session.add(playground)
+        
+        db.session.commit()
+        return jsonify({'message': f'Successfully imported {len(csv_data)} playgrounds'}), 200
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500 
