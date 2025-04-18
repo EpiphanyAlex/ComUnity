@@ -3,8 +3,9 @@ from flask_cors import CORS
 import os
 from backend.models.models import db, Playground, MelFeature
 from backend.config.db_config import SQLALCHEMY_DATABASE_URI
-from backend.routes.chat import chat_bp
+#from backend.routes.chat import chat_bp
 from backend.routes.main import main
+from backend.routes.update_events import fetch_and_store_events, should_update
 from backend.routes.import_csv import csv_import
 from backend.routes.playgrounds import playgrounds_bp
 from openai import OpenAI
@@ -109,6 +110,16 @@ def create_app():
     @app.route('/api/health', methods=['GET'])
     def health_check():
         return jsonify({"status": "ok", "timestamp": datetime.now().isoformat()})
+
+
+    with app.app_context():
+        db.create_all()
+        print("✅ Database tables created successfully")
+
+        if should_update():
+            fetch_and_store_events()
+        else:
+            print("🕒 Event data already up to date.")
 
     return app
 
