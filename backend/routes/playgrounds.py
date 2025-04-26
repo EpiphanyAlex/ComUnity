@@ -13,10 +13,10 @@ def get_playgrounds():
                 "SELECT id, name, lat AS latitude, lon AS longitude, features, description FROM playground"
             ))
             data = [dict(row._mapping) for row in result]
-            print("✅ Loaded playground data:", data[:3])  # Print just the first 3
+            print("Loaded playground data:", data[:3])  # Print just the first 3
             return jsonify(data)
     except Exception as e:
-        print(f"❌ Error in /api/playgrounds: {e}")
+        print(f"Error in /api/playgrounds: {e}")
         return jsonify({"error": str(e)}), 500
 
 @playgrounds_bp.route('/api/features', methods=['GET'])
@@ -27,5 +27,5 @@ def get_features():
             data = [dict(row._mapping) for row in result]  # safer mapping
             return jsonify(data)
     except Exception as e:
-        print(f"❌ Error in /api/features: {e}")
+        print(f"Error in /api/features: {e}")
         return jsonify({"error": str(e)}), 500

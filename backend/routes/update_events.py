@@ -23,7 +23,7 @@ def fetch_and_store_events():
     url = "https://serpapi.com/search"
     response = requests.get(url, params=params)
     if response.status_code != 200:
-        print("❌ Failed to fetch event data")
+        print("Failed to fetch event data")
         return
 
     data = response.json()
@@ -48,4 +48,4 @@ def fetch_and_store_events():
         status.last_updated = date.today()
 
     db.session.commit()
-    print("✅ Events updated.")
+    print("Events updated.")

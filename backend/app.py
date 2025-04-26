@@ -60,9 +60,9 @@ def create_app():
     try:
         with app.app_context():
             db.create_all()
-            print("✅ Database tables created successfully")
+            print("Database tables created successfully")
     except Exception as e:
-        print(f"❌ Could not connect to database: {e}")
+        print(f"Could not connect to database: {e}")
 
     @app.route('/api/chat', methods=['POST'])
     def chat():
@@ -114,12 +114,12 @@ def create_app():
 
     with app.app_context():
         db.create_all()
-        print("✅ Database tables created successfully")
+        print("Database tables created successfully")
 
         if should_update():
             fetch_and_store_events()
         else:
-            print("🕒 Event data already up to date.")
+            print("Event data already up to date.")
 
     return app
 
