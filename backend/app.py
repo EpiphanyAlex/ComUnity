@@ -1,13 +1,13 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
-from backend.models.models import db, Playground, MelFeature
-from backend.config.db_config import SQLALCHEMY_DATABASE_URI
-#from backend.routes.chat import chat_bp
-from backend.routes.main import main
-from backend.routes.update_events import fetch_and_store_events, should_update
-from backend.routes.import_csv import csv_import
-from backend.routes.playgrounds import playgrounds_bp
+from models.models import db, Playground, MelFeature
+from config.db_config import SQLALCHEMY_DATABASE_URI
+#from routes.chat import chat_bp
+from routes.main import main
+from routes.update_events import fetch_and_store_events, should_update
+from routes.import_csv import csv_import
+from routes.playgrounds import playgrounds_bp
 from openai import OpenAI
 from dotenv import load_dotenv
 import logging

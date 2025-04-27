@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from backend.models.models import db, Playground
+from models.models import db, Playground
 import pandas as pd
 import io
 

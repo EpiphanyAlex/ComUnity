@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from backend.models.models import db, Playground, MelFeature
+from models.models import db, Playground, MelFeature
 
 main = Blueprint('main', __name__)
 

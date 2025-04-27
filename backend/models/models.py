@@ -32,6 +32,17 @@ class Event(db.Model):
     title = db.Column(db.String(255))
     address = db.Column(db.Text)
     date = db.Column(db.String(50))
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
+    link = db.Column(db.Text)               
+    description = db.Column(db.Text)         
+    venue_name = db.Column(db.String(255))   
+    venue_rating = db.Column(db.Float)       
+    venue_reviews = db.Column(db.Integer)    
+    thumbnail = db.Column(db.Text)            
+    image = db.Column(db.Text)                
+
+
 
 class EventUpdateStatus(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from ..config.db_config import SQLALCHEMY_DATABASE_URI
+from config.db_config import SQLALCHEMY_DATABASE_URI
 from sqlalchemy import create_engine, text
 
 playgrounds_bp = Blueprint('playgrounds', __name__)
