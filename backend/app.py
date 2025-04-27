@@ -14,7 +14,7 @@ def create_app():
         "https://comunityconnect.netlify.app",  # Your production Netlify app
         "http://localhost:3000",                # Local development (React default)
         "http://127.0.0.1:3000",                # Alternative local address
-    ])
+    ],supports_credentials=True)
 
     # CORS(app)
     

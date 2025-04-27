@@ -23,9 +23,9 @@ const Events = () => {
                     <div className="col-md-6 d-flex align-items-center">
                       <div className="hero-text">
                         <h1>
-                          Free and fun education
+                        Discover events, Find support and
                           <br />
-                          for all teenagers
+                          Connect with others who got you
                         </h1>
                       </div>
                     </div>
