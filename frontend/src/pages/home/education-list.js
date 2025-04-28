@@ -114,8 +114,15 @@ const EducationList = () => {
                       <h2 className="story-title">{article.title}</h2>
                     </div>
                     
+                      {/* 
+                      <div className="article-tags mb-3">
+                        {article.tags.map((tag, index) => (
+                          <span key={index} className="badge bg-light text-dark me-2">
+                            {tag}
+                          </span>
+                        ))}
+                      </div> */}
                     
-                    <p className="story-excerpt">{article.excerpt}</p>
                     <div>
                       <a href={`/education-detail?id=${article.id}`} className="story-button">
                         Read {article.author || "Full"} Story
