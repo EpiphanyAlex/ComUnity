@@ -73,7 +73,7 @@ ComUnity is a web application that helps teenagers in Melbourne build meaningful
 
 - Frontend: React.js
 - Backend: Python Flask
-- Database: AWS
+- Database: AWS RDS
 - Version Control: Git/GitHub
 
 ## Project Structure
@@ -131,4 +131,21 @@ ComUnity is a web application that helps teenagers in Melbourne build meaningful
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Password Protected Access
+
+This website is password protected. Use the following credentials to access it:
+
+- **Username**: TA16
+- **Password**: comunity16
+
+## Deployment with Docker
+
+The application is containerized with Docker and can be deployed to AWS EC2 using the provided setup:
+
+1. Clone the repository to your EC2 instance
+2. Navigate to the project directory
+3. Run the deployment script: `./deploy.sh`
+
+This will build and start both the frontend and backend services. 
