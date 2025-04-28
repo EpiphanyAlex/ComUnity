@@ -1,18 +1,61 @@
 import { useEffect, useState } from "react"
 import ReactDOM from "react-dom"
 import "bootstrap/dist/css/bootstrap.min.css"
+
 import "./index.css"
 import Header from "./header"
 
+const paginateContent = (content, currentPage, pageSize) => {
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(content, 'text/html');
+  const elements = Array.from(doc.body.children);
+  
+  let currentLength = 0;
+  let pageContent = [];
+  
+  for (let element of elements) {
+    currentLength += element.textContent.length;
+    if (currentLength >= startIndex && currentLength < endIndex) {
+      pageContent.push(element.outerHTML);
+    }
+  }
+  
+  return pageContent.join('');
+}
+
+const hasNextPage = (content, currentPage, pageSize) => {
+  const totalLength = content.length;
+  return (currentPage * pageSize) < totalLength;
+}
 
 const ArticleDetail = () => {
   const [articleId, setArticleId] = useState(1)
+  const [favorites, setFavorites] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const pageSize = 500
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search)
     const id = Number.parseInt(queryParams.get("id") || "1")
     setArticleId(id)
+    
+    const savedFavorites = localStorage.getItem('favorites')
+    if (savedFavorites) {
+      setFavorites(JSON.parse(savedFavorites))
+    }
   }, [])
+
+  const toggleFavorite = (id) => {
+    const newFavorites = favorites.includes(id)
+      ? favorites.filter(fid => fid !== id)
+      : [...favorites, id]
+    
+    setFavorites(newFavorites)
+    localStorage.setItem('favorites', JSON.stringify(newFavorites))
+  }
 
   const articlesDatabase = {
     1: {
@@ -21,6 +64,7 @@ const ArticleDetail = () => {
       date: "April 2, 2025",
       author: "xxx",
       category: "Early Learning",
+      tags: ["culture", "pressure"],
       content: `
         <h3>This can help if:</h3>
 
@@ -52,6 +96,7 @@ const ArticleDetail = () => {
       date: "March 28, 2025",
       author: "xxx",
       category: "Teaching Methods",
+      tags: ["social", "friendship"],
       content: `
 
         <h3>This can help if:</h3>
@@ -89,6 +134,7 @@ const ArticleDetail = () => {
       date: "March 25, 2025",
       author: "xxx",
       category: "Alternative Education",
+      tags: ["racism"],
       content: `
 
         <h3>This can help if:</h3>
@@ -211,10 +257,20 @@ const ArticleDetail = () => {
       <section className="article-detail-section py-5 mt-5">
         <div className="container">
           <div className="row mb-4">
-            <div className="col-12">
-              <a href="/education-list" className="btn btn-outline-primary mb-4">
+            <div className="col-12 d-flex justify-content-between align-items-center">
+              <a href="/education-list" className="btn btn-outline-primary">
                 <i className="bi bi-arrow-left me-2"></i> Back to Articles
               </a>
+              <button 
+                className={`btn favorite-btn ${favorites.includes(articleId) ? 'favorite-active' : ''}`}
+                onClick={() => toggleFavorite(articleId)}
+              >
+                {!favorites.includes(articleId) ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                </svg>}
+              </button>
             </div>
           </div>
 
@@ -222,7 +278,7 @@ const ArticleDetail = () => {
             <div className="col-lg-12">
               <article className="article-content">
                 <h1 className="article-title mb-3">{article.title}</h1>
-
+                
                 <div className="article-meta mb-4">
                   <span className="article-date me-3">
                     <i className="bi bi-calendar me-1"></i> {article.date}
@@ -239,7 +295,43 @@ const ArticleDetail = () => {
                   <img src={article.image || "/placeholder.svg"} alt={article.title} className="img-fluid rounded" />
                 </div>
 
-                <div className="article-body" dangerouslySetInnerHTML={{ __html: article.content }}></div>
+                <div className="article-body-container position-relative">
+                  <div className="article-body" 
+                    dangerouslySetInnerHTML={{ 
+                      __html: paginateContent(article.content, currentPage, pageSize)
+                    }} 
+                  />
+                  
+                  <div className="article-tags mb-4">
+                    {article.tags && article.tags.map((tag, index) => (
+                      <span key={index} className="badge bg-secondary me-2">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="pagination-controls d-flex justify-content-between mt-4">
+                    <button 
+                      className="btn btn-outline-primary"
+                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                      disabled={currentPage === 1}
+                    >
+                      <i className="bi bi-chevron-left"></i> Previous
+                    </button>
+                    
+                    <span className="align-self-center">
+                      Page {currentPage}
+                    </span>
+
+                    <button 
+                      className="btn btn-outline-primary"
+                      onClick={() => setCurrentPage(prev => prev + 1)}
+                      disabled={!hasNextPage(article.content, currentPage, pageSize)}
+                    >
+                      Next <i className="bi bi-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
               </article>
             </div>
           </div>
