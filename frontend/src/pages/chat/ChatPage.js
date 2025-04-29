@@ -70,7 +70,7 @@ const ChatPage = () => {
 
     try {
       // Send request to backend
-      const response = await fetch('http://localhost:5000/api/chat', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ const ChatPage = () => {
     ]);
     
     // Simple ping to check if server is available
-    fetch('http://localhost:5000/api/health', { 
+    fetch('/api/health', { 
       method: 'GET'
     })
     .then(response => {

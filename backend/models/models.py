@@ -26,3 +26,13 @@ class MelFeature(db.Model):
     
     def __repr__(self):
         return f'<MelFeature {self.id} for Playground {self.playground_id}>' 
+
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255))
+    address = db.Column(db.Text)
+    date = db.Column(db.String(50))
+
+class EventUpdateStatus(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    last_updated = db.Column(db.Date)
