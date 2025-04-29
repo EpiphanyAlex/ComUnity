@@ -17,7 +17,7 @@ body {
   
   
   .hero-section {
-    background-color: #fffbe6;
+    background-color: #b4a147;
     position: relative;
     overflow: hidden;
     padding: 100px 0;
@@ -31,7 +31,7 @@ body {
   }
   
   .hero-text h1 {
-    color: #1a4971;
+    color: #024a72;
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 1.5rem;
@@ -72,8 +72,8 @@ body {
     border-radius: 50%;
     overflow: hidden;
     padding: 10px;
-    background-color: white;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    /* background-color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); */
   }
   
   .circular-image img {
@@ -82,9 +82,7 @@ body {
     height: auto;
   }
   
-  .circular-image.green-bg {
-    background-color: #c8e6c9;
-  }
+
   
   .circular-image.blue-bg {
     background-color: #90caf9;
@@ -385,6 +383,7 @@ body {
   
   .article-body {
     line-height: 1.8;
+    text-align: left;
   }
   
   .article-body h3 {
@@ -733,5 +732,46 @@ body {
       padding: 1.5rem;
     }
   }
+
+
+.navbar-collapse {
+  display: flex !important;
+  justify-content: center;
+}
+
+.navbar-toggler {
+  display: none;
+}
+
+
+@media (max-width: 693px) {
+  .navbar-collapse {
+    display: none !important;
+  }
+
+  .navbar-toggler {
+    display: block;
+  }
+
+ 
+  .navbar-collapse.show {
+    display: block !important;
+  }
+}
+
+
+@media (min-width: 694px) {
+  .navbar-nav {
+    flex-direction: row !important;
+  }
+
+  .navbar-nav .nav-item {
+    margin: 0 10px;
+  }
+}
+
+
+
+
   
   

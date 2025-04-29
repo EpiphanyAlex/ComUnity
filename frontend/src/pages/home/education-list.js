@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./index.css"
 import Header from "./header"
-import Footer from "./footer"
+
 
 const EducationList = () => {
   
@@ -96,7 +96,7 @@ const EducationList = () => {
         </div>
       </section>
 
-      <Footer />
+
     </>
   )
 }

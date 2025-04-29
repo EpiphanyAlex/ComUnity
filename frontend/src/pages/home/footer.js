@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="footer py-4 px-4">
         <div className="container">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-6 text-start">
               <h5>Navigation</h5>
               <ul className="nav flex-column">
                 <li className="nav-item">
