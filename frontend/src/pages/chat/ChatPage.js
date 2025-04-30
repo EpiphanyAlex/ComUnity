@@ -70,7 +70,6 @@ const ChatPage = () => {
 
     try {
       // Send request to backend
-
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -132,7 +131,6 @@ const ChatPage = () => {
     ]);
     
     // Simple ping to check if server is available
-
     fetch('/api/health', { 
       method: 'GET'
     })
