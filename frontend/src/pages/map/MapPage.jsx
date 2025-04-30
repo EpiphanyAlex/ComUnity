@@ -88,11 +88,11 @@ function MapPage() {
     fetch("http://localhost:5000/api/playgrounds")
       .then((res) => res.json())
       .then((data) => {
-        console.log("✅ Playground API data:", data);
+        console.log("Playground API data:", data);
         setPlaygrounds(Array.isArray(data) ? data : []);
       })
       .catch((err) => {
-        console.error("❌ Failed to fetch playgrounds:", err);
+        console.error("Failed to fetch playgrounds:", err);
         setPlaygrounds([]);
       });
   }, []);
@@ -101,8 +101,8 @@ function MapPage() {
   const [events, setEvents] = useState([]);
   // const [currentEvents, setCurrentEvents] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
-  const markerRefs = useRef([]); // 存放所有 marker 的引用
-  const popupRef = useRef(null); // 当前正在打开的 popup
+  const markerRefs = useRef([]);
+  const popupRef = useRef(null);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [orderBy, setOrderBy] = useState("Latest");
 
@@ -110,11 +110,12 @@ function MapPage() {
     fetch("http://localhost:5000/api/features")
       .then((res) => res.json())
       .then((data) => {
-        console.log("✅ Mel features API data:", data);
+
+        console.log("Mel features API data:", data);
         setFeatures(Array.isArray(data) ? data : []);
       })
       .catch((err) => {
-        console.error("❌ Failed to fetch mel features:", err);
+        console.error("Failed to fetch mel features:", err);
         setFeatures([]);
       });
   }, []);
@@ -191,7 +192,7 @@ function MapPage() {
 
   useEffect(() => {
     async function fetchData() {
-      await loadEvents(); // 假设 loadEvents 是异步 fetch
+      await loadEvents(); // Assume loadEvents is async fetch
       // const temp = getEventList();
       // console.log("Fetch eventList", temp);
       // setEvents(Array.isArray(temp) ? temp : []);
@@ -201,11 +202,11 @@ function MapPage() {
 
   useEffect(() => {
     if (!mapRef.current) return;
-    // 1. 清除旧的 markers
+    // 1. Clear old markers
     markerRefs.current.forEach((marker) => marker.remove());
     markerRefs.current = [];
 
-    // 2. 根据新的 eventList 加新的 markers
+    // 2. Add new markers based on the new eventList
     events.forEach((item) => {
       const isSaved = getSavedMarkers().includes(item.id);
       const heartIconHTML = `
@@ -235,18 +236,18 @@ function MapPage() {
       marker.getElement().addEventListener("click", (e) => {
         e.stopPropagation();
 
-        // 1. 关闭旧的 popup
+        // 1. Close old popup
         if (popupRef.current) {
           popupRef.current.remove();
         }
 
-        // 2. 打开新的 popup
+        // 2. Open new popup
         popup.setLngLat([item.longitude, item.latitude]).addTo(mapRef.current);
 
-        // 3. 保存当前 popup
+        // 3. Save current popup
         popupRef.current = popup;
 
-        // 4. 延迟一点点（确保popup DOM插到页面上了），然后直接找button绑定事件
+        // 4. Add slight delay (to ensure popup DOM is inserted) then bind button events
         setTimeout(() => {
           const popupContent = document.querySelector(
             ".mapboxgl-popup-content"
@@ -278,15 +279,15 @@ function MapPage() {
               console.log("Toggled save for id:", id);
             });
           }
-        }, 50); // 50ms比较保险，让DOM挂到页面
+        }, 50); // 50ms safety margin to ensure DOM is mounted
       });
 
-      markerRefs.current.push(marker); // 保存marker引用，方便下次清除
+      markerRefs.current.push(marker); // Store marker reference for future cleanup
     });
   }, [events]);
 
   const showFavorites = () => {
-    const saved = getSavedMarkers(); // 从cookie/localStorage拿收藏的id数组
+    const saved = getSavedMarkers(); // Get saved IDs from cookie/localStorage
     const favorites = events.filter((event) => saved.includes(event.id));
     setEvents(favorites);
   };
@@ -303,9 +304,9 @@ function MapPage() {
     setActiveTab(tab);
 
     if (tab === "all") {
-      loadEvents(); // 重新拉一遍
+      loadEvents(); // Reload all events
     } else if (tab === "favorites") {
-      showFavorites(); // 只在已有events中过滤
+      showFavorites(); // Filter existing events
     }
     flyToFirst();
   };
@@ -332,7 +333,7 @@ function MapPage() {
         return new Date(a.date) - new Date(b.date);
       });
     }
-    // 以后可以扩展其他排序方式
+    // Can extend with other sorting methods in the future
 
     setEvents(filtered);
     flyToFirst();
@@ -432,7 +433,7 @@ function MapPage() {
             {/* <div className="location-options">
               <span>Visible map area</span>
               <span role="img" aria-label="anchor">
-                ⚓
+                Anchor
               </span>{" "}
               Near me
             </div> */}
@@ -524,7 +525,7 @@ function MapPage() {
           </div>
 
           <button className="search-btn" onClick={handleSearchKeyWord}>
-            🔍 Search
+            Search
           </button>
           <button
             className="reset-btn"
@@ -534,7 +535,7 @@ function MapPage() {
               setSearchKeyword("");
             }}
           >
-            🔄 Reset Filters
+            Reset Filters
           </button>
         </div>
       </aside>

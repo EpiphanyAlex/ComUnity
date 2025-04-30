@@ -15,12 +15,6 @@ RUN npm run build
 # Stage 2: Serve the React app with Nginx
 FROM nginx:alpine
 
-# Install apache2-utils for htpasswd utility
-RUN apk add --no-cache apache2-utils
-
-# Create password file with credentials
-RUN htpasswd -cb /etc/nginx/.htpasswd TA16 comunity16
-
 # Copy the built app from the first stage to Nginx's default directory
 COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
