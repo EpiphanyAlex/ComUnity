@@ -1,4 +1,4 @@
-# CommuniTeens
+# ComUnity
 
 A web application designed to strengthen community connections for teenagers (12-18) in Melbourne, Australia. The goal is to address social isolation by providing resources, events, and a chat interface to help teenagers connect with their community.
 
@@ -12,7 +12,7 @@ A web application designed to strengthen community connections for teenagers (12
 ## Project Structure
 
 ```
-CommuniTeens/
+ComUnity/
 ├── frontend/          # React.js web application
 ├── backend/           # Flask API server
 └── docs/              # Documentation
@@ -67,19 +67,19 @@ The API server will run at http://localhost:5000.
 
 ## Project Overview
 
-KidsConnect Melbourne is a web application that helps children in Melbourne build meaningful social connections within their community. The platform focuses on creating opportunities for kids to interact, participate in group activities, and develop strong community bonds.
+ComUnity is a web application that helps teenagers in Melbourne build meaningful social connections within their community. The platform focuses on creating opportunities for teens to interact, participate in group activities, and develop strong community bonds.
 
 ### Tech Stack
 
 - Frontend: React.js
 - Backend: Python Flask
-- Database: AWS
+- Database: AWS RDS
 - Version Control: Git/GitHub
 
 ## Project Structure
 
 ```
-├── frontend/         # React Frondend
+├── frontend/         # React Frontend
 │   ├── public/
 │   └── src/
 │       ├── components/
@@ -131,4 +131,21 @@ KidsConnect Melbourne is a web application that helps children in Melbourne buil
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Password Protected Access
+
+This website is password protected. Use the following credentials to access it:
+
+- **Username**: TA16
+- **Password**: comunity16
+
+## Deployment with Docker
+
+The application is containerized with Docker and can be deployed to AWS EC2 using the provided setup:
+
+1. Clone the repository to your EC2 instance
+2. Navigate to the project directory
+3. Run the deployment script: `./deploy.sh`
+
+This will build and start both the frontend and backend services. 

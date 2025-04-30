@@ -82,12 +82,17 @@ function MapPage() {
     }
   }, []);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> yanzhuo
   const [playgrounds, setPlaygrounds] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:5000/api/playgrounds")
       .then((res) => res.json())
       .then((data) => {
+<<<<<<< HEAD
         console.log("✅ Playground API data:", data);
         setPlaygrounds(Array.isArray(data) ? data : []);
       })
@@ -105,11 +110,24 @@ function MapPage() {
   const popupRef = useRef(null); // 当前正在打开的 popup
   const [searchKeyword, setSearchKeyword] = useState("");
   const [orderBy, setOrderBy] = useState("Latest");
+=======
+        console.log("Playground API data:", data);
+        setPlaygrounds(Array.isArray(data) ? data : []);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch playgrounds:", err);
+        setPlaygrounds([]);
+      });
+  }, []);
+  
+  const [features, setFeatures] = useState([]);
+>>>>>>> yanzhuo
 
   useEffect(() => {
     fetch("http://localhost:5000/api/features")
       .then((res) => res.json())
       .then((data) => {
+<<<<<<< HEAD
         console.log("✅ Mel features API data:", data);
         setFeatures(Array.isArray(data) ? data : []);
       })
@@ -118,6 +136,18 @@ function MapPage() {
         setFeatures([]);
       });
   }, []);
+=======
+        console.log("Mel features API data:", data);
+        setFeatures(Array.isArray(data) ? data : []);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch mel features:", err);
+        setFeatures([]);
+      });
+  }, []);
+  
+
+>>>>>>> yanzhuo
 
   useEffect(() => {
     const defaultLocation = [145.119, -37.928]; // Clayton, VIC
@@ -659,6 +689,7 @@ function MapPage() {
                   isActive={activeFeature?.id === `pg-${pg.id}`}
                   onClick={handleMarkerClick}
                 />
+<<<<<<< HEAD
               ))}
 
             {mapRef.current &&
@@ -684,6 +715,64 @@ function MapPage() {
               <Popup map={mapRef.current} activeFeature={activeFeature} />
             )}
           </div>
+=======
+
+
+
+                
+              );
+            })}
+                
+                {mapRef.current &&
+                  Array.isArray(playgrounds) &&
+                  playgrounds.map((pg) => (
+                    <Marker
+                      key={`pg-${pg.id}`}
+                      map={mapRef.current}
+                      feature={{
+                        id: `pg-${pg.id}`,
+                        geometry: { coordinates: [pg.longitude, pg.latitude] },
+                        properties: {
+                          mag: "PG",
+                          place: pg.name,
+                          description: pg.description || "",
+                          features: pg.features || "",
+                          address: pg.address || ""
+                        },
+                      }}
+                      isActive={activeFeature?.id === `pg-${pg.id}`}
+                      onClick={handleMarkerClick}
+                    />
+                  ))}
+
+
+
+
+
+                    {mapRef.current &&
+                      features.map((ft) => (
+                        <Marker
+                          key={`ft-${ft.id}`}
+                          map={mapRef.current}
+                          feature={{
+                            id: `ft-${ft.id}`,
+                            geometry: { coordinates: [ft.longitude, ft.latitude] },
+                            properties: {
+                              place: ft.feature_name,
+                              theme: ft.theme,
+                              sub_theme: ft.sub_theme,
+                            },
+                          }}
+                          isActive={activeFeature?.id === `ft-${ft.id}`}
+                          onClick={handleMarkerClick}
+                        />
+                      ))}
+
+
+          {mapRef.current && (
+            <Popup map={mapRef.current} activeFeature={activeFeature} />
+          )}
+>>>>>>> yanzhuo
         </div>
       </div>
     </div>
@@ -707,6 +796,7 @@ function saveMarkerToCookie(id) {
   }
 }
 
+<<<<<<< HEAD
 async function loadEvents() {
   try {
     const data = await fetchAndStore("http://localhost:5000/events");
@@ -726,3 +816,6 @@ function getEventList() {
 }
 
 export default MapPage;
+=======
+export default MapPage;
+>>>>>>> yanzhuo
