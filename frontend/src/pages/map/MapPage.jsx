@@ -729,4 +729,3 @@ function getEventList() {
 }
 
 export default MapPage;
-
