@@ -2,8 +2,8 @@ name: Build and Deploy to EC2
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:    # Allows manual trigger
+    branches: [ main ]  # Change to your main branch name if different
+  workflow_dispatch:    # Allows manual triggering from GitHub UI
 
 jobs:
   build-and-push:
@@ -24,21 +24,41 @@ jobs:
       - name: Build and push backend
         uses: docker/build-push-action@v4
         with:
-          context: ./backend
+          context: ./backend  # Adjust this path based on your project structure
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/comunity:backend-latest
+          tags: epiphanylyz/comunity:backend-latest
 
       - name: Build and push frontend
         uses: docker/build-push-action@v4
         with:
-          context: ./frontend
+          context: ./frontend  # Adjust this path based on your project structure
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/comunity:frontend-latest
+          tags: epiphanylyz/comunity:frontend-latest
 
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
+      - name: Create .env file
+        run: |
+          # Create .env file with all necessary environment variables
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" > .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+          echo "AWS_REGION=${{ secrets.AWS_REGION }}" >> .env
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
+
+      - name: Copy .env to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: ".env"
+          target: "~/comunity/"  # This should match the directory containing your docker-compose.yml
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
@@ -46,32 +66,53 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # Navigate to the directory with docker-compose.yml
+            cd ~/comunity/
+            
             # Pull the latest images
-            docker pull ${{ secrets.DOCKER_USERNAME }}/comunity:backend-latest
-            docker pull ${{ secrets.DOCKER_USERNAME }}/comunity:frontend-latest
+            docker-compose pull backend frontend
             
-            # Stop and remove old containers
-            docker stop comunity-backend || true
-            docker stop comunity-frontend || true
-            docker rm comunity-backend || true
-            docker rm comunity-frontend || true
+            # Restart only backend and frontend services (keeping iteration1 services unchanged)
+            docker-compose up -d backend frontend
             
-            # Start new containers
-            docker run -d --name comunity-backend \
-              -p 5000:5000 \
-              -e OPENAI_API_KEY='${{ secrets.OPENAI_API_KEY }}' \
-              -e DB_USERNAME='${{ secrets.DB_USERNAME }}' \
-              -e DB_PASSWORD='${{ secrets.DB_PASSWORD }}' \
-              -e DB_HOST='${{ secrets.DB_HOST }}' \
-              -e DB_PORT='${{ secrets.DB_PORT }}' \
-              -e DB_NAME='${{ secrets.DB_NAME }}' \
-              -e AWS_REGION='${{ secrets.AWS_REGION }}' \
-              -e PYTHONPATH=/comunity \
-              ${{ secrets.DOCKER_USERNAME }}/comunity:backend-latest
+            # Log deployment time for record keeping
+            echo "Deployment completed at $(date)" >> deploy.log
             
-            docker run -d --name comunity-frontend \
-              -p 8080:80 \
-              ${{ secrets.DOCKER_USERNAME }}/comunity:frontend-latest
+            # Verify that the containers are running
+            docker ps | grep 'comunity-backend\|comunity-frontend'
             
-            # Verify containers are running
-            docker ps | grep comunity
+            # Cleanup unused images to save disk space
+            docker image prune -f
+
+      - name: Verify deployment
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Check if the containers are running properly
+            cd ~/comunity/
+            
+            # Check backend status
+            if docker ps | grep -q comunity-backend; then
+              echo "Backend container is running"
+            else
+              echo "Backend container failed to start"
+              exit 1
+            fi
+            
+            # Check frontend status
+            if docker ps | grep -q comunity-frontend; then
+              echo "Frontend container is running"
+            else
+              echo "Frontend container failed to start"
+              exit 1
+            fi
+            
+            # Check backend health
+            if curl -s http://localhost:5000/api/health | grep -q "ok"; then
+              echo "Backend is healthy"
+            else
+              echo "Backend may not be fully operational"
+            fi
