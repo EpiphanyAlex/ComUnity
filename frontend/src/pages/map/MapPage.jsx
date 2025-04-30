@@ -131,6 +131,23 @@ function MapPage() {
       // maxBounds: melbourneBounds, // restrict to Melbourne
     });
 
+    // ✅ 添加内建定位按钮
+    const geoLocate = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      trackUserLocation: true, // 是否持续跟踪
+      showUserLocation: true, // 是否在地图上显示用户蓝点
+    });
+    mapRef.current.addControl(geoLocate, "top-right");
+
+    // 添加放大缩小按钮
+    const nav = new mapboxgl.NavigationControl({
+      showCompass: false, // 不显示指南针
+      visualizePitch: false, // 不显示上下箭头（pitch 控制）
+    });
+    mapRef.current.addControl(nav, "top-right");
+
     mapRef.current.on("load", () => {
       getBboxAndFetch();
     });

@@ -1,8 +1,0 @@
-pip install Flask
-pip install Flask-SQLAlchemy
-pip install PyMySQL
-cd backend2
-python app.py
-
-
-http://127.0.0.1:5000/events

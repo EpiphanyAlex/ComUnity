@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
-from backend.models.models import db, Playground, MelFeature
+from backend.models.models import db, Playground, MelFeature, Event
 from backend.config.db_config import SQLALCHEMY_DATABASE_URI
 #from backend.routes.chat import chat_bp
 from backend.routes.main import main
@@ -112,6 +112,76 @@ def create_app():
         return jsonify({"status": "ok", "timestamp": datetime.now().isoformat()})
 
 
+    # 查询所有events
+    @app.route('/events', methods=['GET'])
+    def get_events():
+        events = Event.query.all()
+        if not events:
+            # ✅ 如果数据库没数据，返回本地 eventlist.json
+            with open('eventlist.json', 'r', encoding='utf-8') as f:
+                backup_data = json.load(f)
+            return jsonify(backup_data)
+        else:
+            return jsonify({"eventList": [event.to_dict() for event in events]})
+
+    # 根据ID查询event
+    @app.route('/events/<int:event_id>', methods=['GET'])
+    def get_event(event_id):
+        event = Event.query.get(event_id)
+        if event is None:
+            return jsonify({'error': 'Event not found'}), 404
+        return jsonify(event.to_dict())
+
+    @app.route('/events/within', methods=['GET'])
+    def get_events_within_bounds():
+        try:
+            min_lat = float(request.args.get('min_lat'))
+            max_lat = float(request.args.get('max_lat'))
+            min_lng = float(request.args.get('min_lng'))
+            max_lng = float(request.args.get('max_lng'))
+        except (TypeError, ValueError):
+            return jsonify({'error': 'Invalid or missing parameters'}), 400
+
+        events = Event.query.filter(
+            Event.latitude >= min_lat,
+            Event.latitude <= max_lat,
+            Event.longitude >= min_lng,
+            Event.longitude <= max_lng
+        ).all()
+
+        return jsonify({
+            "eventList": [event.to_dict() for event in events]
+        })
+
+    # http://127.0.0.1:5000/events/nearby?lat=-37.8136&lng=144.9631
+    @app.route('/events/nearby', methods=['GET'])
+    def get_events_nearby():
+        try:
+            lat = float(request.args.get('lat'))
+            lng = float(request.args.get('lng'))
+        except (TypeError, ValueError):
+            return jsonify({'error': 'Missing or invalid lat/lng'}), 400
+
+        # 5公里的近似偏移值（适用于墨尔本）
+        lat_range = 0.045
+        lng_range = 0.056
+
+        min_lat = lat - lat_range
+        max_lat = lat + lat_range
+        min_lng = lng - lng_range
+        max_lng = lng + lng_range
+
+        # 快速范围查询
+        events = Event.query.filter(
+            Event.latitude >= min_lat,
+            Event.latitude <= max_lat,
+            Event.longitude >= min_lng,
+            Event.longitude <= max_lng
+        ).all()
+
+        return jsonify({
+            "eventList": [event.to_dict() for event in events]
+        })
     with app.app_context():
         db.create_all()
         print("Database tables created successfully")
