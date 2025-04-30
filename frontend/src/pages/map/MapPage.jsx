@@ -75,11 +75,11 @@ function MapPage() {
     fetch("http://localhost:5000/api/playgrounds")
       .then((res) => res.json())
       .then((data) => {
-        console.log("✅ Playground API data:", data);
+        console.log("Playground API data:", data);
         setPlaygrounds(Array.isArray(data) ? data : []);
       })
       .catch((err) => {
-        console.error("❌ Failed to fetch playgrounds:", err);
+        console.error("Failed to fetch playgrounds:", err);
         setPlaygrounds([]);
       });
   }, []);
@@ -90,18 +90,15 @@ function MapPage() {
     fetch("http://localhost:5000/api/features")
       .then((res) => res.json())
       .then((data) => {
-        console.log("✅ Mel features API data:", data);
+        console.log("Mel features API data:", data);
         setFeatures(Array.isArray(data) ? data : []);
       })
       .catch((err) => {
-        console.error("❌ Failed to fetch mel features:", err);
+        console.error("Failed to fetch mel features:", err);
         setFeatures([]);
       });
   }, []);
   
-
-
-
 
 
   useEffect(() => {
