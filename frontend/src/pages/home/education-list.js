@@ -171,18 +171,25 @@ const EducationList = () => {
                         }} 
                       />
                     </div>
+<<<<<<< HEAD
                     <div className={`story-content ${article.overlayColor}`}>
                       <div className="d-flex justify-content-between align-items-center">
                         <h2 className="story-title">{article.title}</h2>
                       </div>
                       
                       {/* <div className="article-tags mb-3">
+=======
+                    
+                      {/* 
+                      <div className="article-tags mb-3">
+>>>>>>> b597920cdfb1703bc36e65c4bd576d14f21ee374
                         {article.tags.map((tag, index) => (
                           <span key={index} className="badge bg-light text-dark me-2">
                             {tag}
                           </span>
                         ))}
                       </div> */}
+<<<<<<< HEAD
                       
                       <div>
                         <a href={`/education-detail?id=${article.id}`} className="story-button">
@@ -199,6 +206,13 @@ const EducationList = () => {
                             <path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
                           </svg>}
                         </button>
+=======
+                    
+                    <div>
+                      <a href={`/education-detail?id=${article.id}`} className="story-button">
+                        Read {article.author || "Full"} Story
+                      </a>
+>>>>>>> b597920cdfb1703bc36e65c4bd576d14f21ee374
                     </div>
                   </div>
                 </div>
