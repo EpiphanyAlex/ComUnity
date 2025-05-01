@@ -81,7 +81,7 @@ const ArticleDetail = () => {
         
         <h3>Explanation of problem:</h3>
         
-        <p>Cultural pressure (or cultural load/colonial load) is when First Nations students are expected to take on extra responsibilities — like leading cultural activities, representing culture at school events, or educating others. These expectations can come from school, friends, community, or even family. While some of it can be empowering, it can also feel exhausting — especially when it's on top of regular school stress.</p>
+        <p>Cultural pressure (or cultural load/colonial load) is when First Nations students are expected to take on extra responsibilities like leading cultural activities, representing culture at school events, or educating others. These expectations can come from school, friends, community, or even family. While some of it can be empowering, it can also feel exhausting especially when it's on top of regular school stress.</p>
         
         
         <h3>How to overcome:</h3>
