@@ -132,20 +132,20 @@ function MapPage() {
       // maxBounds: melbourneBounds, // restrict to Melbourne
     });
 
-    // ✅ 添加内建定位按钮
+    // ✅ Add built-in navigation buttons
     const geoLocate = new mapboxgl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true,
       },
-      trackUserLocation: true, // 是否持续跟踪
-      showUserLocation: true, // 是否在地图上显示用户蓝点
+      trackUserLocation: true, // Is it continuous tracking?
+      showUserLocation: true, // Whether to display the user's blue dot on the map
     });
     mapRef.current.addControl(geoLocate, "top-right");
 
-    // 添加放大缩小按钮
+    //Add zoom in and zoom out buttons
     const nav = new mapboxgl.NavigationControl({
-      showCompass: false, // 不显示指南针
-      visualizePitch: false, // 不显示上下箭头（pitch 控制）
+      showCompass: false, // Do not display compass
+      visualizePitch: false, // Do not display up and down arrows (pitch control)
     });
     mapRef.current.addControl(nav, "top-right");
 
