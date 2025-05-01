@@ -45,21 +45,8 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy the built app from the first stage
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Add a custom script to update Nginx configuration at runtime
-RUN echo '#!/bin/sh\n\
-# Create a dynamic version file\n\
-echo "Container started at: $(date)" > /usr/share/nginx/html/runtime-info.txt\n\
-echo "Container ID: $(hostname)" >> /usr/share/nginx/html/runtime-info.txt\n\
-\n\
-# Update Nginx cache control if environment variable is set\n\
-if [ -n "$NGINX_CACHE_CONTROL" ]; then\n\
-  echo "Setting custom cache control: $NGINX_CACHE_CONTROL"\n\
-  sed -i "s/add_header Cache-Control .*;/add_header Cache-Control \"$NGINX_CACHE_CONTROL\";/g" /etc/nginx/conf.d/default.conf\n\
-fi\n\
-\n\
-# Start Nginx\n\
-exec nginx -g "daemon off;"\n' > /docker-entrypoint.sh
-
+# Create a simple entrypoint script
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 # Expose port 80
