@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import ReactDOM from "react-dom"
 import "bootstrap/dist/css/bootstrap.min.css"
 
 import "./index.css"
@@ -193,8 +192,6 @@ const ArticleDetail = () => {
   };
 
   const article = articlesDatabase[articleId] || articlesDatabase[1];
-  
-  const currentImage = article.images[currentImageIndex];
 
   return (
     <>
@@ -248,7 +245,7 @@ const ArticleDetail = () => {
                   }}>
                     <img 
                       src={article.images[currentImageIndex]} 
-                      alt={`${article.title} - Image ${currentImageIndex + 1}`} 
+                      alt={`${article.title} - ${currentImageIndex + 1}`} 
                       className="img-fluid" 
                       style={{
                         maxHeight: "250px", 

@@ -6,7 +6,6 @@ import Popup from "./Popup";
 import mbxGeocoding from "@mapbox/mapbox-sdk/services/geocoding";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ReactComponent as CardItemIcon } from "../../res/ic_card_list_marker.svg";
-import { ReactComponent as SearchIcon } from "../../res/ic_search.svg";
 import ImagePlace from "../../res/image_event_place.png";
 import heartOutline from "../../res/heart-outline.png";
 import heartFilled from "../../res/heart-filled.png";
@@ -25,35 +24,35 @@ function MapPage() {
     }
   }
 
-  const [mockData] = useState([
-    {
-      id: 1,
-      image: "https://source.unsplash.com/200x200/?tennis",
-      type: "Sport",
-      title: "Let's Play Tennis",
-      address: "85 South Cres, Northcote VIC 3070",
-      date: "14/04/2025",
-      time: "14:30 - 16:00",
-      lat: -37.768,
-      lng: 145.008,
-    },
-    {
-      id: 2,
-      image: "https://source.unsplash.com/200x200/?yoga",
-      type: "Wellness",
-      title: "Sunrise Yoga",
-      address: "10 Bay St, Brighton VIC 3186",
-      date: "15/04/2025",
-      time: "07:00 - 08:00",
-      lat: -37.917,
-      lng: 144.993,
-    },
-  ]);
+  // const [mockData] = useState([
+  //   {
+  //     id: 1,
+  //     image: "https://source.unsplash.com/200x200/?tennis",
+  //     type: "Sport",
+  //     title: "Let's Play Tennis",
+  //     address: "85 South Cres, Northcote VIC 3070",
+  //     date: "14/04/2025",
+  //     time: "14:30 - 16:00",
+  //     lat: -37.768,
+  //     lng: 145.008,
+  //   },
+  //   {
+  //     id: 2,
+  //     image: "https://source.unsplash.com/200x200/?yoga",
+  //     type: "Wellness",
+  //     title: "Sunrise Yoga",
+  //     address: "10 Bay St, Brighton VIC 3186",
+  //     date: "15/04/2025",
+  //     time: "07:00 - 08:00",
+  //     lat: -37.917,
+  //     lng: 144.993,
+  //   },
+  // ]);
 
-  const melbourneBounds = [
-    [144.55, -38.25], // Southwest corner
-    [145.45, -37.4], // Northeast corner
-  ];
+  // const melbourneBounds = [
+  //   [144.55, -38.25], // Southwest corner
+  //   [145.45, -37.4], // Northeast corner
+  // ];
 
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -66,8 +65,9 @@ function MapPage() {
   const [query, setQuery] = useState("");
   const [earthquakeData, setEarthquakeData] = useState();
   const [activeFeature, setActiveFeature] = useState();
-  const markerRef = useRef(null); // to store the current marker
-  const [proximity, setProximity] = useState(10.67); // initial value
+  // const markerRef = useRef(null); // to store the current marker
+  // const [proximity, setProximity] = useState(10.67); // initial value
+  const [, setProximity] = useState(10.67); // initial value
 
   const getBboxAndFetch = useCallback(async () => {
     const bounds = mapRef.current.getBounds();
@@ -715,24 +715,24 @@ function getSavedMarkers() {
   return saved ? JSON.parse(decodeURIComponent(saved.split("=")[1])) : [];
 }
 
-function saveMarkerToCookie(id) {
-  const saved = getSavedMarkers();
-  if (!saved.includes(id)) {
-    const updated = [...saved, id];
-    document.cookie = `savedMarkers=${encodeURIComponent(
-      JSON.stringify(updated)
-    )}; path=/; max-age=31536000`;
-  }
-}
+// function saveMarkerToCookie(id) {
+//   const saved = getSavedMarkers();
+//   if (!saved.includes(id)) {
+//     const updated = [...saved, id];
+//     document.cookie = `savedMarkers=${encodeURIComponent(
+//       JSON.stringify(updated)
+//     )}; path=/; max-age=31536000`;
+//   }
+// }
 
-async function loadEvents() {
-  try {
-    const data = await fetchAndStore("http://localhost:5000/events");
-    console.log("Events Loaded:", data);
-  } catch (error) {
-    console.error("Failed to load events");
-  }
-}
+// async function loadEvents() {
+//   try {
+//     const data = await fetchAndStore("http://localhost:5000/events");
+//     console.log("Events Loaded:", data);
+//   } catch (error) {
+//     console.error("Failed to load events");
+//   }
+// }
 
 function getEventList() {
   try {

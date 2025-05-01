@@ -1,9 +1,7 @@
-import logo from "./logo.svg";
 import "./App.css";
 
 import React from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import EducationList from "./pages/home/education-list";
 import ArticleDetail from "./pages/home/education-detail";
