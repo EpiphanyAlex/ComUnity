@@ -11,19 +11,19 @@ const Footer = () => {
               <h5>Navigation</h5>
               <ul className="nav flex-column">
                 <li className="nav-item">
-                  <a href="#" className="nav-link ps-0">
+                  <button className="nav-link ps-0">
                     Home
-                  </a>
+                  </button>
                 </li>
                 <li className="nav-item">
-                  <a href="#" className="nav-link ps-0">
+                  <button className="nav-link ps-0">
                     Blog
-                  </a>
+                  </button>
                 </li>
                 <li className="nav-item">
-                  <a href="#" className="nav-link ps-0">
+                  <button className="nav-link ps-0">
                     About Us
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -31,19 +31,19 @@ const Footer = () => {
               <h5>Social Media</h5>
               <ul className="list-inline">
                 <li className="list-inline-item">
-                  <a href="#" className="social-link">
+                  <button className="social-link">
                   <i className="bi bi-instagram"></i>
-                  </a>
+                  </button>
                 </li>
                 <li className="list-inline-item">
-                  <a href="#" className="social-link">
+                  <button className="social-link">
                     <i className="bi bi-twitter"></i>
-                  </a>
+                  </button>
                 </li>
                 <li className="list-inline-item">
-                  <a href="#" className="social-link">
+                  <button className="social-link">
                     <i className="bi bi-youtube"></i>
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>

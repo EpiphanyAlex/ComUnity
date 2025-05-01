@@ -1,26 +1,74 @@
 import { useEffect, useState } from "react"
-import ReactDOM from "react-dom"
 import "bootstrap/dist/css/bootstrap.min.css"
+
 import "./index.css"
 import Header from "./header"
 
+const paginateContent = (content, currentPage, pageSize) => {
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(content, 'text/html');
+  const elements = Array.from(doc.body.children);
+  
+  let currentLength = 0;
+  let pageContent = [];
+  
+  for (let element of elements) {
+    currentLength += element.textContent.length;
+    if (currentLength >= startIndex && currentLength < endIndex) {
+      pageContent.push(element.outerHTML);
+    }
+  }
+  
+  return pageContent.join('');
+}
+
+const hasNextPage = (content, currentPage, pageSize) => {
+  const totalLength = content.length;
+  return (currentPage * pageSize) < totalLength;
+}
 
 const ArticleDetail = () => {
   const [articleId, setArticleId] = useState(1)
+  const [favorites, setFavorites] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const pageSize = 500 
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search)
     const id = Number.parseInt(queryParams.get("id") || "1")
     setArticleId(id)
+    
+
+    const savedFavorites = localStorage.getItem('favorites')
+    if (savedFavorites) {
+      setFavorites(JSON.parse(savedFavorites))
+    }
   }, [])
+
+  const toggleFavorite = (id) => {
+    const newFavorites = favorites.includes(id)
+      ? favorites.filter(fid => fid !== id)
+      : [...favorites, id]
+    
+    setFavorites(newFavorites)
+    localStorage.setItem('favorites', JSON.stringify(newFavorites))
+  }
+
 
   const articlesDatabase = {
     1: {
       title: "Cultural Pressure",
-      image: "https://cdn.pixabay.com/photo/2017/07/31/11/21/people-2557396_1280.jpg",
+      images: [
+        'articles/cultural_pressure/image1.svg',
+        'articles/cultural_pressure/image2.svg',
+        'articles/cultural_pressure/image3.svg'
+      ],
       date: "April 2, 2025",
-      author: "xxx",
-      category: "Early Learning",
+      tags: ["culture", "pressure"],
       content: `
         <h3>This can help if:</h3>
 
@@ -32,7 +80,7 @@ const ArticleDetail = () => {
         
         <h3>Explanation of problem:</h3>
         
-        <p>Cultural pressure (or cultural load/colonial load) is when First Nations students are expected to take on extra responsibilities — like leading cultural activities, representing culture at school events, or educating others. These expectations can come from school, friends, community, or even family. While some of it can be empowering, it can also feel exhausting — especially when it’s on top of regular school stress.</p>
+        <p>Cultural pressure (or cultural load/colonial load) is when First Nations students are expected to take on extra responsibilities like leading cultural activities, representing culture at school events, or educating others. These expectations can come from school, friends, community, or even family. While some of it can be empowering, it can also feel exhausting especially when it's on top of regular school stress.</p>
         
         
         <h3>How to overcome:</h3>
@@ -48,10 +96,13 @@ const ArticleDetail = () => {
     },
     2: {
       title: "New people",
-      image: "https://cdn.pixabay.com/photo/2018/03/03/20/02/laptop-3196481_1280.jpg",
+      images: [
+        'articles/meet_new_people/image1.svg',
+        'articles/meet_new_people/image2.svg',
+        'articles/meet_new_people/image3.svg'
+      ],
       date: "March 28, 2025",
-      author: "xxx",
-      category: "Teaching Methods",
+      tags: ["social", "friendship"],
       content: `
 
         <h3>This can help if:</h3>
@@ -85,10 +136,13 @@ const ArticleDetail = () => {
     },
     3: {
       title: "Racism",
-      image: "https://cdn.pixabay.com/photo/2017/08/06/12/06/people-2591874_1280.jpg",
+      images: [
+        'articles/racism/image1.svg',
+        'articles/racism/image2.svg',
+        'articles/racism/image3.svg'
+      ],
       date: "March 25, 2025",
-      author: "xxx",
-      category: "Alternative Education",
+      tags: ["racism"],
       content: `
 
         <h3>This can help if:</h3>
@@ -116,94 +170,28 @@ const ArticleDetail = () => {
         <p>Talk to someone you trust: Whether it's a family member, friend, teacher, or counsellor - sharing your experience helps.</p>
       `,
     },
-    // 4: {
-    //   title: "Digital Literacy: Preparing Students for the Future",
-    //   image: "https://cdn.pixabay.com/photo/2016/11/29/09/32/concept-1868728_1280.jpg",
-    //   date: "March 20, 2025",
-    //   author: "Dr. Robert Garcia",
-    //   category: "Technology",
-    //   content: `
-    //     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.</p>
-        
-    //     <h3>The Digital Skills Gap</h3>
-        
-    //     <p>Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Vestibulum id ligula porta felis euismod semper. Donec ullamcorper nulla non metus auctor fringilla. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        
-    //     <p>Cras mattis consectetur purus sit amet fermentum. Donec id elit non mi porta gravida at eget metus. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. Curabitur blandit tempus porttitor. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-        
-    //     <h3>Essential Digital Skills for Today's Students</h3>
-        
-    //     <p>Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Curabitur blandit tempus porttitor. Aenean lacinia bibendum nulla sed consectetur.</p>
-        
-    //     <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cras mattis consectetur purus sit amet fermentum. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-        
-    //     <h3>Integrating Technology Meaningfully</h3>
-        
-    //     <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-        
-    //     <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur. Curabitur blandit tempus porttitor.</p>
-    //   `,
-    // },
-    // 5: {
-    //   title: "Inclusive Education: Strategies for Diverse Classrooms",
-    //   image: "https://cdn.pixabay.com/photo/2018/07/25/08/58/business-3560916_1280.jpg",
-    //   date: "March 15, 2025",
-    //   author: "Dr. Amara Patel",
-    //   category: "Inclusive Learning",
-    //   content: `
-    //     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.</p>
-        
-    //     <h3>Understanding Inclusive Education</h3>
-        
-    //     <p>Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Vestibulum id ligula porta felis euismod semper. Donec ullamcorper nulla non metus auctor fringilla. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        
-    //     <p>Cras mattis consectetur purus sit amet fermentum. Donec id elit non mi porta gravida at eget metus. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. Curabitur blandit tempus porttitor. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-        
-    //     <h3>Creating an Inclusive Classroom Environment</h3>
-        
-    //     <p>Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Curabitur blandit tempus porttitor. Aenean lacinia bibendum nulla sed consectetur.</p>
-        
-    //     <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cras mattis consectetur purus sit amet fermentum. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-        
-    //     <h3>Collaboration and Support Systems</h3>
-        
-    //     <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-        
-    //     <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur. Curabitur blandit tempus porttitor.</p>
-    //   `,
-    // },
-    // 6: {
-    //   title: "The Role of Play in Learning",
-    //   image: "https://cdn.pixabay.com/photo/2016/04/26/12/25/children-1354565_1280.jpg",
-    //   date: "March 10, 2025",
-    //   author: "Dr. James Wilson",
-    //   category: "Child Development",
-    //   content: `
-    //     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.</p>
-        
-    //     <h3>The Science Behind Play-Based Learning</h3>
-        
-    //     <p>Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Vestibulum id ligula porta felis euismod semper. Donec ullamcorper nulla non metus auctor fringilla. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        
-    //     <p>Cras mattis consectetur purus sit amet fermentum. Donec id elit non mi porta gravida at eget metus. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. Curabitur blandit tempus porttitor. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-        
-    //     <h3>Types of Play and Their Benefits</h3>
-        
-    //     <p>Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Curabitur blandit tempus porttitor. Aenean lacinia bibendum nulla sed consectetur.</p>
-        
-    //     <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cras mattis consectetur purus sit amet fermentum. Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-        
-    //     <h3>Integrating Play in Educational Settings</h3>
-        
-    //     <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-        
-    //     <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur. Curabitur blandit tempus porttitor.</p>
-    //   `,
-    // },
   }
 
-  console.log('render')
-  const article = articlesDatabase[articleId] || articlesDatabase[1]
+  
+  const handleNextPage = () => {
+    const article = articlesDatabase[articleId];
+    if (hasNextPage(article.content, currentPage, pageSize)) {
+      setCurrentPage(prev => prev + 1);
+      
+      setCurrentImageIndex(prev => (prev + 1) % article.images.length);
+    }
+  };
+
+  
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(prev => prev - 1);
+      
+      setCurrentImageIndex(prev => (prev - 1 + articlesDatabase[articleId].images.length) % articlesDatabase[articleId].images.length);
+    }
+  };
+
+  const article = articlesDatabase[articleId] || articlesDatabase[1];
 
   return (
     <>
@@ -211,10 +199,20 @@ const ArticleDetail = () => {
       <section className="article-detail-section py-5 mt-5">
         <div className="container">
           <div className="row mb-4">
-            <div className="col-12">
-              <a href="/education-list" className="btn btn-outline-primary mb-4">
+            <div className="col-12 d-flex justify-content-between align-items-center">
+              <a href="/education-list" className="btn btn-outline-primary">
                 <i className="bi bi-arrow-left me-2"></i> Back to Articles
               </a>
+              <button 
+                className={`btn favorite-btn ${favorites.includes(articleId) ? 'favorite-active' : ''}`}
+                onClick={() => toggleFavorite(articleId)}
+              >
+                {!favorites.includes(articleId) ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-heart" viewBox="0 0 16 16">
+                  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                </svg> : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" className="bi bi-heart-fill" viewBox="0 0 16 16">
+                  <path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                </svg>}
+              </button>
             </div>
           </div>
 
@@ -222,7 +220,7 @@ const ArticleDetail = () => {
             <div className="col-lg-12">
               <article className="article-content">
                 <h1 className="article-title mb-3">{article.title}</h1>
-
+                
                 <div className="article-meta mb-4">
                   <span className="article-date me-3">
                     <i className="bi bi-calendar me-1"></i> {article.date}
@@ -236,20 +234,90 @@ const ArticleDetail = () => {
                 </div>
 
                 <div className="article-featured-image mb-4">
-                  <img src={article.image || "/placeholder.svg"} alt={article.title} className="img-fluid rounded" />
+                  <div className="image-container" style={{
+                    height: "300px", 
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    overflow: "hidden",
+                    borderRadius: "8px",
+                    backgroundColor: "#f8f9fa"
+                  }}>
+                    <img 
+                      src={article.images[currentImageIndex]} 
+                      alt={`${article.title} - ${currentImageIndex + 1}`} 
+                      className="img-fluid" 
+                      style={{
+                        maxHeight: "250px", 
+                        maxWidth: "100%",
+                        objectFit: "contain"
+                      }}
+                    />
+                  </div>
+                  <div className="image-pagination-indicator mt-2 text-center">
+                    {article.images.map((_, index) => (
+                      <span 
+                        key={index} 
+                        className={`dot ${index === currentImageIndex ? 'active' : ''}`} 
+                        style={{
+                          display: 'inline-block',
+                          width: '10px',
+                          height: '10px',
+                          borderRadius: '50%',
+                          background: index === currentImageIndex ? '#007bff' : '#ccc',
+                          margin: '0 5px',
+                          cursor: 'pointer'
+                        }}
+                        onClick={() => setCurrentImageIndex(index)}
+                      ></span>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="article-body" dangerouslySetInnerHTML={{ __html: article.content }}></div>
+                <div className="article-body-container position-relative">
+                  <div className="article-body" 
+                    dangerouslySetInnerHTML={{ 
+                      __html: paginateContent(article.content, currentPage, pageSize)
+                    }} 
+                  />
+                  
+                  <div className="article-tags mb-4">
+                    {article.tags && article.tags.map((tag, index) => (
+                      <span key={index} className="badge bg-secondary me-2">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="pagination-controls d-flex justify-content-between mt-4">
+                    <button 
+                      className="btn btn-outline-primary"
+                      onClick={handlePrevPage}
+                      disabled={currentPage === 1}
+                    >
+                      <i className="bi bi-chevron-left"></i> Previous
+                    </button>
+                    
+                    <span className="align-self-center">
+                      Page {currentPage}
+                    </span>
+
+                    <button 
+                      className="btn btn-outline-primary"
+                      onClick={handleNextPage}
+                      disabled={!hasNextPage(article.content, currentPage, pageSize)}
+                    >
+                      Next <i className="bi bi-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
               </article>
             </div>
           </div>
         </div>
       </section>
-
-
     </>
   )
 }
-
 
 export default ArticleDetail

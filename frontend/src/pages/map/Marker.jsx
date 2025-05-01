@@ -16,7 +16,7 @@ const Marker = ({ map, feature, isActive, onClick }) => {
     return () => {
       markerRef.current.remove();
     };
-  }, []);
+  }, [geometry.coordinates, map]);
   return (
     <>
       {createPortal(
