@@ -132,7 +132,7 @@ function MapPage() {
       // maxBounds: melbourneBounds, // restrict to Melbourne
     });
 
-    // ✅ Add built-in navigation buttons
+    // Add built-in navigation buttons
     const geoLocate = new mapboxgl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true,
