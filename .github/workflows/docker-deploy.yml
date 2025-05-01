@@ -2,7 +2,7 @@ name: Build and Deploy to EC2
 
 on:
   push:
-    branches: [ main ]  # Change to your main branch name if different
+    branches: [ main ]
   workflow_dispatch:    # Allows manual triggering from GitHub UI
 
 jobs:
@@ -11,6 +11,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Get complete git history for version tagging
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -21,26 +26,52 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Generate version tag
+        id: vars
+        run: |
+          # Create a unique version using commit hash and timestamp
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          TIMESTAMP=$(date +%Y%m%d%H%M%S)
+          echo "VERSION=${SHORT_SHA}-${TIMESTAMP}" >> $GITHUB_OUTPUT
+          echo "TIMESTAMP=${TIMESTAMP}" >> $GITHUB_OUTPUT
+
       - name: Build and push backend
         uses: docker/build-push-action@v4
         with:
-          context: ./backend  # Adjust this path based on your project structure
+          context: ./backend
           push: true
-          tags: epiphanylyz/comunity:backend-latest
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            epiphanylyz/comunity:backend-latest
+            epiphanylyz/comunity:backend-${{ steps.vars.outputs.VERSION }}
+          build-args: |
+            BUILD_VERSION=${{ steps.vars.outputs.VERSION }}
+          no-cache: true  # Force rebuild to ensure latest code is used
 
       - name: Build and push frontend
         uses: docker/build-push-action@v4
         with:
-          context: ./frontend  # Adjust this path based on your project structure
+          context: ./frontend
           push: true
-          tags: epiphanylyz/comunity:frontend-latest
+          tags: |
+            epiphanylyz/comunity:frontend-latest
+            epiphanylyz/comunity:frontend-${{ steps.vars.outputs.VERSION }}
+          build-args: |
+            REACT_APP_API_URL=/api
+            REACT_APP_BUILD_VERSION=${{ steps.vars.outputs.VERSION }}
+            REACT_APP_BUILD_TIME=${{ steps.vars.outputs.TIMESTAMP }}
+          no-cache: true  # Force rebuild to ensure latest code is used
 
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Create .env file
+      - name: Create deployment files
         run: |
+          # Create version.txt for frontend container
+          echo "Version: $(date)" > version.txt
+          echo "Build: ${{ steps.vars.outputs.VERSION }}" >> version.txt
+          
           # Create .env file with all necessary environment variables
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" > .env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
@@ -49,15 +80,16 @@ jobs:
           echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
           echo "AWS_REGION=${{ secrets.AWS_REGION }}" >> .env
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
+          echo "DEPLOY_TIMESTAMP=$(date +%Y%m%d%H%M%S)" >> .env
 
-      - name: Copy .env to EC2
+      - name: Copy deployment files to EC2
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: ".env"
-          target: "~/comunity/"  # This should match the directory containing your docker-compose.yml
+          source: ".env,version.txt"
+          target: "~/comunity/"
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
@@ -69,14 +101,33 @@ jobs:
             # Navigate to the directory with docker-compose.yml
             cd ~/comunity/
             
-            # Pull the latest images
-            docker-compose pull backend frontend
+            # Export deployment timestamp
+            export DEPLOY_TIMESTAMP=$(cat .env | grep DEPLOY_TIMESTAMP | cut -d= -f2)
+            echo "Deploying with timestamp: $DEPLOY_TIMESTAMP"
             
-            # Restart only backend and frontend services (keeping iteration1 services unchanged)
+            # Force pull the latest images (with no-cache)
+            docker-compose pull --no-cache backend frontend
+            
+            # Stop and remove existing containers (to force clean restart)
+            docker-compose stop backend frontend
+            docker-compose rm -f backend frontend
+            
+            # Start containers with new images
             docker-compose up -d backend frontend
             
+            # Copy version file into frontend container
+            if [ -f "version.txt" ]; then
+              docker cp version.txt comunity-frontend:/usr/share/nginx/html/version.txt
+            fi
+            
+            # Force reload frontend Nginx configuration
+            docker exec comunity-frontend nginx -s reload
+            
+            # Restart host Nginx to clear any proxy caches
+            sudo systemctl restart nginx
+            
             # Log deployment time for record keeping
-            echo "Deployment completed at $(date)" >> deploy.log
+            echo "Deployment completed at $(date) - Version: $DEPLOY_TIMESTAMP" >> deploy.log
             
             # Verify that the containers are running
             docker ps | grep 'comunity-backend\|comunity-frontend'
@@ -94,25 +145,30 @@ jobs:
             # Check if the containers are running properly
             cd ~/comunity/
             
-            # Check backend status
+            echo "Checking backend status..."
             if docker ps | grep -q comunity-backend; then
               echo "Backend container is running"
             else
               echo "Backend container failed to start"
+              docker logs comunity-backend
               exit 1
             fi
             
-            # Check frontend status
+            echo "Checking frontend status..."
             if docker ps | grep -q comunity-frontend; then
               echo "Frontend container is running"
             else
               echo "Frontend container failed to start"
+              docker logs comunity-frontend
               exit 1
             fi
             
-            # Check backend health
+            echo "Checking backend health..."
             if curl -s http://localhost:5000/api/health | grep -q "ok"; then
               echo "Backend is healthy"
             else
-              echo "Backend may not be fully operational"
+              echo "Backend health check failed"
+              exit 1
             fi
+            
+            echo "DEPLOYMENT VERIFICATION COMPLETE - SUCCESS"
