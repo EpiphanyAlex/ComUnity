@@ -188,7 +188,7 @@ function MapPage() {
     return () => {
       mapRef.current.remove();
     };
-  }, []);
+  }, [getBboxAndFetch]);
 
   useEffect(() => {
     async function fetchData() {

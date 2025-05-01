@@ -120,7 +120,7 @@ const ComUnityWebsite = () => {
               >
                 <img
                   src="/p2.png"
-                  alt="Education image"
+                  alt="Education"
                   style={{
                     height: "auto",
                     maxWidth: "100%",
@@ -146,10 +146,9 @@ const ComUnityWebsite = () => {
       >
         <img
           src="/p3.png"
-          alt="Education image"
+          alt="Education"
           style={{
             height: "100%",
-            height: 738,
             objectFit: "cover",
             borderRadius: 16,
             position: "absolute",
@@ -362,9 +361,9 @@ const ComUnityWebsite = () => {
                 took a galley of type and scrambled it to make a type specimen book. It has survived not only five
                 centuries.
               </p>
-              <a href="#" className="btn btn-primary" style={{ width: 200 }}>
+              <button className="btn btn-primary" style={{ width: 200 }}>
                 Click
-              </a>
+              </button>
             </div>
           </div>
         </div>
