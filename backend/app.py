@@ -57,12 +57,12 @@ def create_app():
     app.register_blueprint(csv_import)
     app.register_blueprint(playgrounds_bp)
 
-    try:
-        with app.app_context():
-            db.create_all()
-            print("Database tables created successfully")
-    except Exception as e:
-        print(f"Could not connect to database: {e}")
+    # try:
+    #     with app.app_context():
+    #         db.create_all()
+    #         print("Database tables created successfully")
+    # except Exception as e:
+    #     print(f"Could not connect to database: {e}")
 
     @app.route('/api/chat', methods=['POST'])
     def chat():
@@ -183,8 +183,8 @@ def create_app():
             "eventList": [event.to_dict() for event in events]
         })
     with app.app_context():
-        db.create_all()
-        print("Database tables created successfully")
+        # db.create_all()
+        # print("Database tables created successfully")
 
         if should_update():
             fetch_and_store_events()
