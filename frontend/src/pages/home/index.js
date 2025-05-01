@@ -5,66 +5,64 @@ import "./index.css";
 const ComUnityWebsite = () => {
   return (
     <>
-      {/* Section 1 */}
-      <div
-        className="section"
-        style={{
-          backgroundImage: "url(/p1.jpg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          position: "relative",
-          padding: 0,
-        }}
-      >
-        <div
-          className="container"
+{/* Section 1 */}
+<div
+  className="section d-flex align-items-center"
+  style={{
+    backgroundImage: "url(/p1.jpg)",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    padding: "100px 0",
+    minHeight: "100vh",
+  }}
+>
+  <div className="container">
+    <div className="row justify-content-start" style={{ marginBottom: "300px" }}>
+      <div className="col-12 col-md-8">
+        <h2
+          className="section-title fp-animate"
           style={{
-            position: "absolute",
-            top: "220px", // 
-            left: "60px", // 
-            // maxWidth: "500px", // 
-            borderLeft: "2px solid #000",
+            color: "#024A72",
+            fontSize: "2.5rem",
+            fontWeight: 600,
+            textAlign: "left",
+            marginBottom: "10px",
+            paddingTop: "10px",
+            lineHeight: "1.4",
+            maxWidth: "500px",
           }}
         >
-          <h2
-            className="section-title fp-animate"
-            style={{
-              color: "#024A72",
-              fontSize: 48,
-              fontWeight: 600,
-              textAlign: "left",
-              marginBottom: "80px",
-              lineHeight: "60px",
-              width: 548,
-            }}
-          >
-            Free and fun education for all children
-          </h2>
-          <div
-            className="btn-custom btn-blue fp-animate"
-            style={{
-              backgroundColor: "#456C82",
-              color: "white",
-              borderRadius: 30,
-              width: 200,
-              height: 63,
-              lineHeight: "63px",
-              textAlign: "center",
-              cursor: "pointer",
-              fontSize: "18px",
-              fontWeight: 500,
-              transition: "all 0.3s ease",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-            }}
-            onClick={() => {
-              window.location.href = "/education-list";
-            }}
-          >
-            Read More
-          </div>
+          Free and fun education for all children
+        </h2>
+        <div
+          className="btn-custom btn-blue fp-animate"
+          style={{
+            backgroundColor: "#456C82",
+            color: "white",
+            borderRadius: 30,
+            width: "200px",
+            height: "63px",
+            lineHeight: "63px",
+            textAlign: "center",
+            cursor: "pointer",
+            fontSize: "18px",
+            marginTop: "80px",
+            fontWeight: 500,
+            transition: "all 0.3s ease",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+          }}
+          onClick={() => {
+            window.location.href = "/education-list";
+          }}
+        >
+          Read More
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
       {/* Section 2 */}
       <div className="section">
         <div className="container" style={{ height: "100%", paddingTop: 80 }}>
@@ -78,14 +76,14 @@ const ComUnityWebsite = () => {
                 className="section-title fp-animate"
                 style={{
                   color: "#024A72",
-                  fontSize: 48,
+                  fontSize: "clamp(24px, 5vw, 48px)",
                   fontWeight: 600,
                   textAlign: "left",
-                  width: 500,
+                  width: "100%",
                   lineHeight: "60px",
                 }}
               >
-                Welcome to ComUnity Platform
+                Welcome to <br /> ComUnity Platform
               </h2>
               <div className="mt-3">
                 <div
@@ -93,16 +91,17 @@ const ComUnityWebsite = () => {
                   style={{
                     marginTop: 20,
                     textAlign: "left",
-                    width: 581,
-                    fontSize: 32,
+                    width: "100%",
+                    flex: 1,
+                    fontSize: "clamp(16px, 3vw, 32px)",
                     color: "#424040",
-                    lineHeight: "40px",
+                    lineHeight: "45px",
                     fontWeight: 400,
                     fontFamily: "Inter",
                   }}
                 >
-                  Education also refers to knowledge received through schooling
-                  instruction and to the institution of teaching as a whole.
+                  Education also refers to knowledge received through <br /> schooling
+                  instruction and to the institution of teaching <br /> as a whole.
                 </div>
               </div>
             </div>
@@ -113,6 +112,7 @@ const ComUnityWebsite = () => {
                 className="fp-animate"
                 style={{
                   height: "100%",
+                  width: "100%", 
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -122,9 +122,9 @@ const ComUnityWebsite = () => {
                   src="/p2.png"
                   alt="Education image"
                   style={{
-                    height: "100%",
-                    width: "auto",
-                    objectFit: "cover",
+                    height: "auto",
+                    maxWidth: "100%",
+                    objectFit: "contain",
                     borderRadius: 16,
                   }}
                 />
@@ -276,7 +276,7 @@ const ComUnityWebsite = () => {
                   boxShadow: "0 4px 8px rgba(231,76,60,0.3)",
                   transition: "all 0.3s ease",
                 }}
-                onClick={() => (window.location.href = "/explore")}
+                onClick={() => (window.location.href = "/map")}
               >
                 Explore
               </button>
@@ -285,74 +285,49 @@ const ComUnityWebsite = () => {
         </div>
       </div>
 
-      {/* Section 4 */}
+{/* Section 4 */}
+<div
+  className="section"
+  style={{
+    width: "100%",
+    padding: "10px 10px",
+    display: "flex",
+    flexWrap: "wrap",               
+    justifyContent: "center",     
+    gap: "120px",                   
+  }}
+>
+  {[1, 2, 3].map((num, index) => {
+    const cardColors = ["blue", "yellow", "red"];
+    const titles = [
+      "Select your location",
+      "Filter based on preference",
+      "See the local events"
+    ];
+    return (
       <div
-        className="section"
+        key={num}
+        className="fp-animate"
         style={{
-          width: "100%",
-          height: "auto",
-          padding: 60,
-          paddingTop: 120,
-          paddingBottom: 120,
+          flex: "1 1 100px",              
+          maxWidth: "400px",             
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "center",
         }}
       >
-        <div
-          className="fp-animate"
-          style={{
-            textAlign: "left",
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <div className="step-card-blue step-card " style={{ width: 410 }}>
-            <div className="step-number">1</div>
-            <h3 className="step-title">Select your location</h3>
-            <hr />
-            <p className="step-text">
-              You can chose based on your geological location or by searching
-            </p>
-          </div>
-        </div>
-        <div
-          className="fp-animate"
-          style={{
-            textAlign: "left",
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <div className="step-card-yellow step-card " style={{ width: 410 }}>
-            <div className="step-number">2</div>
-            <h3 className="step-title">Filter based on preference</h3>
-            <hr />
-            <p className="step-text">
-              You can chose based on your geological location or by searching
-            </p>
-          </div>
-        </div>
-        <div
-          className="fp-animate"
-          style={{
-            textAlign: "left",
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <div className="step-card-red step-card " style={{ width: 410 }}>
-            <div className="step-number">3</div>
-            <h3 className="step-title">See the local events</h3>
-            <hr />
-            <p className="step-text">
-              You can chose based on your geological location or by searching
-            </p>
-          </div>
+        <div className={`step-card-${cardColors[index]} step-card`} style={{ width: "100%" }}>
+          <div className="step-number">{num}</div>
+          <h3 className="step-title">{titles[index]}</h3>
+          <hr />
+          <p className="step-text">
+            You can chose based on your geological location or by searching
+          </p>
         </div>
       </div>
+    );
+  })}
+</div>
+
 
       {/* Section 5 */}
       <div
@@ -362,12 +337,13 @@ const ComUnityWebsite = () => {
           height: "auto",
           padding: 60,
           display: "flex",
+          flexWrap: "wrap",
           justifyContent: "space-around",
           backgroundColor: "#f2f2f2",
         }}
       >
-        <div style={{ textAlign: "left", flex: 1 }}>
-          <div style={{ width: 419, textAlign: "left" }}>
+        <div style={{ textAlign: "left", flex: 1,}}>
+          <div style={{ width: 419, textAlign: "left", marginLeft: "160px" }}>
             <h2 className="section-title fp-animate">Talk to Your Buddy!</h2>
             <p>
               Lorem Ipsum has been the industry's standard dummy text ever since
@@ -399,6 +375,7 @@ const ComUnityWebsite = () => {
           />
         </div>
       </div>
+
       {/* Section 6 */}
       <div
         className="section"
@@ -434,7 +411,7 @@ const ComUnityWebsite = () => {
             </p>
             <div className="text-left mt-3 fp-animate">
               <a
-                href="/chat"
+                href="/quiz"
                 className="btn btn-primary"
                 style={{ width: 200 }}
               >

@@ -997,3 +997,25 @@ div[style*="backgroundColor: #456C82"]:hover {
   justify-content: center;
   align-items: center;
 }
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.8rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .btn-custom {
+    width: 100% !important;
+    max-width: 300px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .step-card {
+    width: 100% !important;
+  }
+
+  .section {
+    padding: 40px 16px !important;
+  }
+}
