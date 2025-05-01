@@ -53,6 +53,7 @@ jobs:
         with:
           context: ./frontend
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: |
             epiphanylyz/comunity:frontend-latest
             epiphanylyz/comunity:frontend-${{ steps.vars.outputs.VERSION }}
