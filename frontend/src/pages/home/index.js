@@ -1,185 +1,451 @@
-import "bootstrap/dist/css/bootstrap.min.css"
-import "./index.css"
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
 
 
 const ComUnityWebsite = () => {
   return (
     <>
-
-      <section className="hero-section"
-        style={{ 
-          backgroundImage: "url(/hero-bg.png)",
+      {/* Section 1 */}
+      <div
+        className="section"
+        style={{
+          backgroundImage: "url(/p1.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
           position: "relative",
-          width: "100vw",
-          marginLeft: "calc(-50vw + 50%)",
-          left: 0,
-          right: 0
+          padding: 0,
         }}
       >
-        <div className="container-fluid p-0">
-          <div className="row g-0">
-            <div className="col-md-24">
-              <div className="hero-content">
-                <div className="container">
-                  <div className="row">
-                    <div className="col-md-6 d-flex align-items-center">
-                      <div className="hero-text">
-                        <h1>
-                        Discover events, Find support and
-                          <br />
-                          Connect with others who got you.
-                        </h1>
-                      </div>
-                    </div>
+        <div
+          className="container"
+          style={{
+            position: "absolute",
+            top: "220px", // 
+            left: "60px", // 
+            // maxWidth: "500px", // 
+            borderLeft: "2px solid #000",
+          }}
+        >
+          <h2
+            className="section-title fp-animate"
+            style={{
+              color: "#024A72",
+              fontSize: 48,
+              fontWeight: 600,
+              textAlign: "left",
+              marginBottom: "80px",
+              lineHeight: "60px",
+              width: 548,
+            }}
+          >
+            Free and fun education for all children
+          </h2>
+          <div
+            className="btn-custom btn-blue fp-animate"
+            style={{
+              backgroundColor: "#456C82",
+              color: "white",
+              borderRadius: 30,
+              width: 200,
+              height: 63,
+              lineHeight: "63px",
+              textAlign: "center",
+              cursor: "pointer",
+              fontSize: "18px",
+              fontWeight: 500,
+              transition: "all 0.3s ease",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+            }}
+            onClick={() => {
+              window.location.href = "/education-list";
+            }}
+          >
+            Read More
+          </div>
+        </div>
+      </div>
+      {/* Section 2 */}
+      <div className="section">
+        <div className="container" style={{ height: "100%", paddingTop: 80 }}>
+          <div className="row" style={{ height: "100%" }}>
+            {/* left text */}
+            <div
+              className="col-lg-7 d-flex flex-column justify-content-center"
+              style={{ height: "100%" }}
+            >
+              <h2
+                className="section-title fp-animate"
+                style={{
+                  color: "#024A72",
+                  fontSize: 48,
+                  fontWeight: 600,
+                  textAlign: "left",
+                  width: 500,
+                  lineHeight: "60px",
+                }}
+              >
+                Welcome to ComUnity Platform
+              </h2>
+              <div className="mt-3">
+                <div
+                  className="fp-animate"
+                  style={{
+                    marginTop: 20,
+                    textAlign: "left",
+                    width: 581,
+                    fontSize: 32,
+                    color: "#424040",
+                    lineHeight: "40px",
+                    fontWeight: 400,
+                    fontFamily: "Inter",
+                  }}
+                >
+                  Education also refers to knowledge received through schooling
+                  instruction and to the institution of teaching as a whole.
+                </div>
+              </div>
+            </div>
+
+            {/* right picture */}
+            <div className="col-lg-5" style={{ height: "100%" }}>
+              <div
+                className="fp-animate"
+                style={{
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <img
+                  src="/p2.png"
+                  alt="Education image"
+                  style={{
+                    height: "100%",
+                    width: "auto",
+                    objectFit: "cover",
+                    borderRadius: 16,
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Section 3 */}
+
+      <div
+        className="section"
+        style={{
+          width: "100%",
+          position: "relative",
+          height: "860px",
+          padding: 60,
+        }}
+      >
+        <img
+          src="/p3.png"
+          alt="Education image"
+          style={{
+            height: "100%",
+            height: 738,
+            objectFit: "cover",
+            borderRadius: 16,
+            position: "absolute",
+            right: 0,
+          }}
+        />
+        <div
+          style={{
+            width: "100%",
+            textAlign: "left",
+            height: "100%",
+            zIndex: 10,
+          }}
+        >
+          <p
+            style={{
+              color: "#024A72",
+              fontSize: 24,
+              fontWeight: 600,
+              textAlign: "left",
+            }}
+          >
+            Interactive
+          </p>
+
+          <h2
+            className="section-title fp-animate"
+            style={{
+              color: "#024A72",
+              fontSize: 38,
+              fontWeight: 600,
+              textAlign: "left",
+              marginBottom: "30px",
+            }}
+          >
+            Event Map
+          </h2>
+          <div className="col-lg-6" style={{ marginLeft: 100 }}>
+            <div
+              className="community-cards-container"
+              style={{ justifyContent: "start", alignItems: "start" }}
+            >
+              <div className="community-card fp-animate" data-delay="0.2s">
+                <div className="d-flex align-items-start">
+                  <div className="card-icon me-3">
+                    <img
+                      src="/icon-2.png"
+                      alt="Community Events Icon"
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </div>
+                  <div className="community-card-content">
+                    <h3>Community Events & Activities</h3>
+                    <p className="mt-2">
+                      Discover local events, workshops, and meetups happening in
+                      your community.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="community-card fp-animate" data-delay="0.4s">
+                <div className="d-flex align-items-start">
+                  <div className="card-icon me-3">
+                    <img
+                      src="/icon-3.png"
+                      alt="Creative & Cultural Spots Icon"
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </div>
+                  <div className="community-card-content">
+                    <h3>Creative & Cultural Spots</h3>
+                    <p className="mt-2">
+                      Explore theaters, art galleries, and cultural festivals in
+                      your area.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="community-card fp-animate" data-delay="0.6s">
+                <div className="d-flex align-items-start">
+                  <div className="card-icon me-3">
+                    <img
+                      src="/icon-1.png"
+                      alt="Outdoor Fun Icon"
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </div>
+                  <div className="community-card-content">
+                    <h3>Outdoor Fun</h3>
+                    <p className="mt-2">
+                      Find parks, playgrounds, zoos, and sports fields for
+                      outdoor activities.
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="explore-events py-5">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-5">
-              <div className="circular-image">
-                <img src="/exp_events.png" alt="Group of students" className="img-fluid" />
-              </div>
-            </div>
-            <div className="col-lg-7">
-              <h2 className="section-title">Find your vibe, not just events!!</h2>
-              <p className="section-text" style={{
-                textAlign: 'left'
-              }}>
-                Use our interactive map to explore teen-friendly hangouts and activities around you and connect with your community.
-              </p>
-              <div className="text-center mt-3">
-               <a href="/map" className="btn btn-explore" style={{ width: 200 }}>
-                 Explore
-               </a>
-              </div>
-
+            <div className="mt-4" style={{ textAlign: "left" }}>
+              <button
+                className="btn-custom btn-red fp-animate"
+                style={{
+                  backgroundColor: "#E74C3C",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "30px",
+                  padding: "12px 40px",
+                  fontSize: "18px",
+                  cursor: "pointer",
+                  boxShadow: "0 4px 8px rgba(231,76,60,0.3)",
+                  transition: "all 0.3s ease",
+                }}
+                onClick={() => (window.location.href = "/explore")}
+              >
+                Explore
+              </button>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section className="how-it-works py-5">
-        <div className="container">
-          <h2 className="section-title text-center mb-5">How Does it Work?</h2>
-          <div className="row">
-            <div className="col-md-4 mb-4">
-              <div className="step-card step-card-blue">
-                <div className="step-number">1</div>
-                <h3 className="step-title">Select your location</h3>
-                <hr />
-                <p className="step-text">You can chose based on your geological location or by searching</p>
-              </div>
-            </div>
-            <div className="col-md-4 mb-4">
-              <div className="step-card step-card-yellow">
-                <div className="step-number">2</div>
-                <h3 className="step-title">Filter based on preference</h3>
-                <hr />
-                <p className="step-text">You can chose based on your geological location or by searching</p>
-              </div>
-            </div>
-            <div className="col-md-4 mb-4">
-              <div className="step-card step-card-red">
-                <div className="step-number">3</div>
-                <h3 className="step-title">See the local events</h3>
-                <hr />
-                <p className="step-text">You can chose based on your geological location or by searching</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="talk-buddy py-5">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-7">
-              <h2 className="section-title">Talk to Your Buddy!</h2>
-              <p className="section-text" style={{
-                textAlign: 'left'
-              }}>
-              Chat or speak with your personal Al companion anytime you need to vent or unwind. It listens, understands, and suggests feel-good activities to help you recharge.
-              </p>
-              <div className="text-center mt-3">
-               <a href="/chat" className="btn btn-success" style={{ width: 200 }}>
-                Click
-               </a>
-              </div>
-
-            </div>
-            <div className="col-lg-5">
-              <div className="circular-image green-bg">
-                <img src="/buddy.png" alt="Person with tablet" className="img-fluid" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="quiz-section py-5"
-        style={{ 
-          backgroundImage: "url(/quiz-bg.png)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          position: "relative"
+      {/* Section 4 */}
+      <div
+        className="section"
+        style={{
+          width: "100%",
+          height: "auto",
+          padding: 60,
+          paddingTop: 120,
+          paddingBottom: 120,
+          display: "flex",
+          justifyContent: "space-around",
         }}
       >
-        <div className="container">
-          <div className="quiz-container">
-            <h2 className="quiz-title">Quiz</h2>
-            <p className="quiz-question">Which Chinese invention greatly improved navigation and exploration?</p>
-            <div className="row g-3 mt-3">
-              <div className="col-md-6">
-                <button className="btn btn-quiz w-100">Printing press</button>
-              </div>
-              <div className="col-md-6">
-                <button className="btn btn-quiz w-100">Steam engine</button>
-              </div>
-              <div className="col-md-6">
-                <button className="btn btn-quiz w-100">Compass</button>
-              </div>
-              <div className="col-md-6">
-                <button className="btn btn-quiz w-100">Telescope</button>
-              </div>
-            </div>
+        <div
+          className="fp-animate"
+          style={{
+            textAlign: "left",
+            flex: 1,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div className="step-card-blue step-card " style={{ width: 410 }}>
+            <div className="step-number">1</div>
+            <h3 className="step-title">Select your location</h3>
+            <hr />
+            <p className="step-text">
+              You can chose based on your geological location or by searching
+            </p>
           </div>
         </div>
-      </section>
+        <div
+          className="fp-animate"
+          style={{
+            textAlign: "left",
+            flex: 1,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div className="step-card-yellow step-card " style={{ width: 410 }}>
+            <div className="step-number">2</div>
+            <h3 className="step-title">Filter based on preference</h3>
+            <hr />
+            <p className="step-text">
+              You can chose based on your geological location or by searching
+            </p>
+          </div>
+        </div>
+        <div
+          className="fp-animate"
+          style={{
+            textAlign: "left",
+            flex: 1,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div className="step-card-red step-card " style={{ width: 410 }}>
+            <div className="step-number">3</div>
+            <h3 className="step-title">See the local events</h3>
+            <hr />
+            <p className="step-text">
+              You can chose based on your geological location or by searching
+            </p>
+          </div>
+        </div>
+      </div>
 
-      <section className="private-space py-5 bg-light">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-5">
-              <div className="circular-image blue-bg">
-                <img src="/private.png" alt="Person looking in mirror" className="img-fluid" />
-              </div>
-            </div>
-            <div className="col-lg-7">
-              <h2 className="section-title">Private Space!</h2>
-              <p className="section-text">
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
-                took a galley of type and scrambled it to make a type specimen book. It has survived not only five
-                centuries.
-              </p>
-              <a href="#" className="btn btn-primary">
+      {/* Section 5 */}
+      <div
+        className="section"
+        style={{
+          width: "100%",
+          height: "auto",
+          padding: 60,
+          display: "flex",
+          justifyContent: "space-around",
+          backgroundColor: "#f2f2f2",
+        }}
+      >
+        <div style={{ textAlign: "left", flex: 1 }}>
+          <div style={{ width: 419, textAlign: "left" }}>
+            <h2 className="section-title fp-animate">Talk to Your Buddy!</h2>
+            <p>
+              Lorem Ipsum has been the industry's standard dummy text ever since
+              the 1500s, when an unknown printer took a galley of type and
+              scrambled it to make a type specimen book. It has survived not
+              only five centuries.
+            </p>
+            <div className="text-left mt-3 fp-animate">
+              <a
+                href="/chat"
+                className="btn btn-success"
+                style={{ width: 200 }}
+              >
                 Click
               </a>
             </div>
           </div>
         </div>
-      </section>
+        <div style={{ flex: 1 }}>
+          <img
+            src="/p5.png"
+            alt="Education image"
+            style={{
+              height: "100%",
+              height: 550,
+              objectFit: "cover",
+              borderRadius: 16,
+            }}
+          />
+        </div>
+      </div>
+      {/* Section 6 */}
+      <div
+        className="section"
+        style={{
+          width: "100%",
+          height: "auto",
+          padding: 60,
+          display: "flex",
+          justifyContent: "space-around",
+        }}
+      >
+        <div style={{ flex: 1 }}>
+          <img
+            src="/p6.png"
+            alt="Education image"
+            style={{
+              height: "100%",
+              height: 550,
+              objectFit: "cover",
+              borderRadius: 16,
+            }}
+          />
+        </div>
+
+        <div style={{ textAlign: "left", flex: 1 }}>
+          <div style={{ width: 419, textAlign: "left" }}>
+            <h2 className="section-title fp-animate">Private Space!</h2>
+            <p>
+              Lorem Ipsum has been the industry's standard dummy text ever since
+              the 1500s, when an unknown printer took a galley of type and
+              scrambled it to make a type specimen book. It has survived not
+              only five centuries.
+            </p>
+            <div className="text-left mt-3 fp-animate">
+              <a
+                href="/chat"
+                className="btn btn-primary"
+                style={{ width: 200 }}
+              >
+                Click
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
-  )
-}
+  );
+};
 
-
-export default ComUnityWebsite
+export default ComUnityWebsite;
