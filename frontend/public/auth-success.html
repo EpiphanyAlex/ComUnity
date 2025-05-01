@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Successful</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        p {
+            margin: 1rem 0;
+            line-height: 1.5;
+        }
+        .redirect {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Authentication Successful</h1>
+        <p>You have successfully authenticated to the ComUnity website.</p>
+        <p>Welcome, you now have access to all protected resources.</p>
+        <p class="redirect">You should be redirected to the application automatically. If not, <a href="/">click here</a> to continue.</p>
+    </div>
+    <script>
+        // Redirect to the main app after a short delay
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 1500);
+    </script>
+</body>
+</html> 
