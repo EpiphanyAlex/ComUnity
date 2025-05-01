@@ -19,13 +19,13 @@ const Popup = ({ map, activeFeature }) => {
     };
   }, [map]);
 
-  // ❗ Delay `addTo(map)` until content has been rendered
+  // Delay `addTo(map)` until content has been rendered
   useLayoutEffect(() => {
     if (!activeFeature || !map) return;
 
     popupRef.current
       .setLngLat(activeFeature.geometry.coordinates)
-      .setDOMContent(contentRef.current) // 👈 use DOM element instead of outerHTML
+      .setDOMContent(contentRef.current) // use DOM element instead of outerHTML
       .addTo(map);
   }, [activeFeature, map]);
 

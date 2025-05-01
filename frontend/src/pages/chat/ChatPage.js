@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Form, Button, Card, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane, faRobot, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faRobot, faUser, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { v4 as uuidv4 } from 'uuid';
 import './ChatPage.css';
 
@@ -165,7 +165,7 @@ const ChatPage = () => {
   return (
     <Container className="chatbot-container my-5">
       <Card className="chat-card">
-        <Card.Header className="chat-header bg-primary text-white">
+        <Card.Header className="chat-header text-white">
           <h4>
             <FontAwesomeIcon icon={faRobot} className="me-2" />
             Melbourne Community Helper
@@ -177,7 +177,7 @@ const ChatPage = () => {
             <div className="error-banner">
               {error}
               <Button 
-                variant="outline-light" 
+                variant="outline-danger" 
                 size="sm" 
                 onClick={retryConnection}
                 className="ms-2"
@@ -213,9 +213,9 @@ const ChatPage = () => {
                 </div>
                 <div className="message-content">
                   <div className="typing-indicator">
-                    <Spinner animation="grow" variant="primary" size="sm" />
-                    <Spinner animation="grow" variant="primary" size="sm" />
-                    <Spinner animation="grow" variant="primary" size="sm" />
+                    <span></span>
+                    <span></span>
+                    <span></span>
                   </div>
                 </div>
               </div>
@@ -237,6 +237,7 @@ const ChatPage = () => {
                 variant="primary" 
                 type="submit" 
                 disabled={isLoading || !input.trim()}
+                aria-label="Send message"
               >
                 <FontAwesomeIcon icon={faPaperPlane} />
               </Button>
