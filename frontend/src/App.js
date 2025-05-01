@@ -1,51 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
 
-import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Home from './pages/home'
-import EducationList from './pages/home/education-list';
-import ArticleDetail from './pages/home/education-detail';
-import Events from './pages/home/events';
-import Header from './pages/home/header';
-import Footer from './pages/home/footer';
-import MapPage from './pages/map/MapPage'
-import Chat from './pages/chat/ChatPage'
-
+import React from "react";
+import { Navbar, Nav, Container } from "react-bootstrap";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/home";
+import EducationList from "./pages/home/education-list";
+import ArticleDetail from "./pages/home/education-detail";
+import Events from "./pages/home/events";
+import Header from "./pages/home/header";
+import Footer from "./pages/home/footer";
+import MapPage from "./pages/map/MapPage";
+import Chat from "./pages/chat/ChatPage";
+// import QuizGame from "./pages/game";
 
 function App() {
   return (
-    
     <div className="App">
       <Header />
-          {/* <div>
+      {/* <div>
       <Navigation />
     </div> */}
-      <Container className="mt-4">
-        <Routes>
-          {/* <Route path="/" element={<h2>Welcome to Home Page</h2>} /> */}
-          <Route path="/" element={
-            <Home />
-          } />
-          <Route path="/home" element={
-            <Home />
-          } />
-          <Route path="/education-list" element={
-            <EducationList />
-          } />
-          <Route path="/education-detail" element={
-            <ArticleDetail />
-          } />
-          <Route path="/chat" element={
-            <Chat />
-          } />
-          <Route path="/events" element={
-            <Events />
-          } />
-          <Route path="/map" element={<MapPage />} />
-        </Routes>
-      </Container>
+      {/* <Container className=""> */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/education-list" element={<EducationList />} />
+        <Route path="/education-detail" element={<ArticleDetail />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/map" element={<MapPage />} />
+        {/* <Route path="/quiz" element={<QuizGame />} /> */}
+      </Routes>
+      {/* </Container> */}
       <Footer />
     </div>
   );
