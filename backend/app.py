@@ -117,14 +117,14 @@ def create_app():
     def get_events():
         events = Event.query.all()
         if not events:
-            # ✅ 如果数据库没数据，返回本地 eventlist.json
+            # ✅ If there is no data in the database, return to local eventlist.json
             with open('eventlist.json', 'r', encoding='utf-8') as f:
                 backup_data = json.load(f)
             return jsonify(backup_data)
         else:
             return jsonify({"eventList": [event.to_dict() for event in events]})
 
-    # 根据ID查询event
+    # id
     @app.route('/events/<int:event_id>', methods=['GET'])
     def get_event(event_id):
         event = Event.query.get(event_id)
@@ -162,7 +162,7 @@ def create_app():
         except (TypeError, ValueError):
             return jsonify({'error': 'Missing or invalid lat/lng'}), 400
 
-        # 5公里的近似偏移值（适用于墨尔本）
+        # Approximate offset of 5 km (applicable to Melbourne)
         lat_range = 0.045
         lng_range = 0.056
 
@@ -171,7 +171,7 @@ def create_app():
         min_lng = lng - lng_range
         max_lng = lng + lng_range
 
-        # 快速范围查询
+        # Fast range query
         events = Event.query.filter(
             Event.latitude >= min_lat,
             Event.latitude <= max_lat,
