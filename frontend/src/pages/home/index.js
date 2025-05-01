@@ -286,141 +286,89 @@ const ComUnityWebsite = () => {
       </div>
 
 {/* Section 4 */}
-<div
-  className="section"
-  style={{
-    width: "100%",
-    padding: "10px 10px",
-    display: "flex",
-    flexWrap: "wrap",               
-    justifyContent: "center",     
-    gap: "120px",                   
-  }}
->
-  {[1, 2, 3].map((num, index) => {
-    const cardColors = ["blue", "yellow", "red"];
-    const titles = [
-      "Select your location",
-      "Filter based on preference",
-      "See the local events"
-    ];
-    return (
-      <div
-        key={num}
-        className="fp-animate"
-        style={{
-          flex: "1 1 100px",              
-          maxWidth: "400px",             
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <div className={`step-card-${cardColors[index]} step-card`} style={{ width: "100%" }}>
-          <div className="step-number">{num}</div>
-          <h3 className="step-title">{titles[index]}</h3>
-          <hr />
-          <p className="step-text">
-            You can chose based on your geological location or by searching
-          </p>
+<section className="how-it-works py-5">
+        <div className="container">
+          <h2 className="section-title text-center mb-5">How Does it Work?</h2>
+          <div className="row">
+            <div className="col-md-4 mb-4">
+              <div className="step-card step-card-blue">
+                <div className="step-number">1</div>
+                <h3 className="step-title">Select your location</h3>
+                <hr />
+                <p className="step-text">You can chose based on your geological location or by searching</p>
+              </div>
+            </div>
+            <div className="col-md-4 mb-4">
+              <div className="step-card step-card-yellow">
+                <div className="step-number">2</div>
+                <h3 className="step-title">Filter based on preference</h3>
+                <hr />
+                <p className="step-text">You can chose based on your geological location or by searching</p>
+              </div>
+            </div>
+            <div className="col-md-4 mb-4">
+              <div className="step-card step-card-red">
+                <div className="step-number">3</div>
+                <h3 className="step-title">See the local events</h3>
+                <hr />
+                <p className="step-text">You can chose based on your geological location or by searching</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    );
-  })}
-</div>
+      </section>
 
 
       {/* Section 5 */}
-      <div
-        className="section"
-        style={{
-          width: "100%",
-          height: "auto",
-          padding: 60,
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-around",
-          backgroundColor: "#f2f2f2",
-        }}
-      >
-        <div style={{ textAlign: "left", flex: 1,}}>
-          <div style={{ width: 419, textAlign: "left", marginLeft: "160px" }}>
-            <h2 className="section-title fp-animate">Talk to Your Buddy!</h2>
-            <p>
-              Lorem Ipsum has been the industry's standard dummy text ever since
-              the 1500s, when an unknown printer took a galley of type and
-              scrambled it to make a type specimen book. It has survived not
-              only five centuries.
-            </p>
-            <div className="text-left mt-3 fp-animate">
-              <a
-                href="/chat"
-                className="btn btn-success"
-                style={{ width: 200 }}
-              >
+      <section className="talk-buddy py-5">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-lg-7">
+              <h2 className="section-title">Talk to Your Buddy!</h2>
+              <p className="section-text" style={{
+                textAlign: 'left'
+              }}>
+              Chat or speak with your personal Al companion anytime you need to vent or unwind. It listens, understands, and suggests feel-good activities to help you recharge.
+              </p>
+              <div className="text-center mt-3">
+               <a href="/chat" className="btn btn-success" style={{ width: 200 }}>
                 Click
-              </a>
+               </a>
+              </div>
+
+            </div>
+            <div className="col-lg-5">
+              <div className="circular-image green-bg">
+                <img src="/buddy.png" alt="Person with tablet" className="img-fluid" />
+              </div>
             </div>
           </div>
         </div>
-        <div style={{ flex: 1 }}>
-          <img
-            src="/p5.png"
-            alt="Education image"
-            style={{
-              height: "100%",
-              height: 550,
-              objectFit: "cover",
-              borderRadius: 16,
-            }}
-          />
-        </div>
-      </div>
+      </section>
 
       {/* Section 6 */}
-      <div
-        className="section"
-        style={{
-          width: "100%",
-          height: "auto",
-          padding: 60,
-          display: "flex",
-          justifyContent: "space-around",
-        }}
-      >
-        <div style={{ flex: 1 }}>
-          <img
-            src="/p6.png"
-            alt="Education image"
-            style={{
-              height: "100%",
-              height: 550,
-              objectFit: "cover",
-              borderRadius: 16,
-            }}
-          />
-        </div>
-
-        <div style={{ textAlign: "left", flex: 1 }}>
-          <div style={{ width: 419, textAlign: "left" }}>
-            <h2 className="section-title fp-animate">Private Space!</h2>
-            <p>
-              Lorem Ipsum has been the industry's standard dummy text ever since
-              the 1500s, when an unknown printer took a galley of type and
-              scrambled it to make a type specimen book. It has survived not
-              only five centuries.
-            </p>
-            <div className="text-left mt-3 fp-animate">
-              <a
-                href="/quiz"
-                className="btn btn-primary"
-                style={{ width: 200 }}
-              >
+      <section className="private-space py-5 bg-light">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-lg-5">
+              <div className="circular-image blue-bg">
+                <img src="/private.png" alt="Person looking in mirror" className="img-fluid" />
+              </div>
+            </div>
+            <div className="col-lg-7">
+              <h2 className="section-title">Private Space!</h2>
+              <p className="section-text">
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
+                took a galley of type and scrambled it to make a type specimen book. It has survived not only five
+                centuries.
+              </p>
+              <a href="#" className="btn btn-primary" style={{ width: 200 }}>
                 Click
               </a>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };

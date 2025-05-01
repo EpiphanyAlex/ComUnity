@@ -69,7 +69,6 @@ const ArticleDetail = () => {
         'articles/cultural_pressure/image3.svg'
       ],
       date: "April 2, 2025",
-      category: "Early Learning",
       tags: ["culture", "pressure"],
       content: `
         <h3>This can help if:</h3>
@@ -104,7 +103,6 @@ const ArticleDetail = () => {
         'articles/meet_new_people/image3.svg'
       ],
       date: "March 28, 2025",
-      category: "Teaching Methods",
       tags: ["social", "friendship"],
       content: `
 
@@ -145,7 +143,6 @@ const ArticleDetail = () => {
         'articles/racism/image3.svg'
       ],
       date: "March 25, 2025",
-      category: "Alternative Education",
       tags: ["racism"],
       content: `
 
