@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
+import json
 from backend.models.models import db, Playground, MelFeature, Event
 from backend.config.db_config import SQLALCHEMY_DATABASE_URI
 #from backend.routes.chat import chat_bp
@@ -111,13 +112,11 @@ def create_app():
     def health_check():
         return jsonify({"status": "ok", "timestamp": datetime.now().isoformat()})
 
-
-    # 查询所有events
     @app.route('/events', methods=['GET'])
     def get_events():
         events = Event.query.all()
         if not events:
-            # ✅ If there is no data in the database, return to local eventlist.json
+            # If there is no data in the database, return to local eventlist.json
             with open('eventlist.json', 'r', encoding='utf-8') as f:
                 backup_data = json.load(f)
             return jsonify(backup_data)
