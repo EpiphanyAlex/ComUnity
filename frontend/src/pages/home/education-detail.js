@@ -4,37 +4,74 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "./index.css"
 import Header from "./header"
 
-const paginateContent = (content, currentPage, pageSize) => {
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  
+const paginateContent = (content, currentPage) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(content, 'text/html');
   const elements = Array.from(doc.body.children);
   
-  let currentLength = 0;
-  let pageContent = [];
-  
-  for (let element of elements) {
-    currentLength += element.textContent.length;
-    if (currentLength >= startIndex && currentLength < endIndex) {
-      pageContent.push(element.outerHTML);
+  const pageBreakIndices = [];
+  elements.forEach((element, index) => {
+    if (element.tagName === 'H3') {
+      pageBreakIndices.push(index);
     }
+  });
+  
+  if (pageBreakIndices.length === 0) {
+    const elementsPerPage = 3;
+    const startIndex = (currentPage - 1) * elementsPerPage;
+    const endIndex = startIndex + elementsPerPage;
+    const pageElements = elements.slice(startIndex, Math.min(endIndex, elements.length));
+    return pageElements.map(el => el.outerHTML).join('');
   }
   
-  return pageContent.join('');
+  const pageCount = pageBreakIndices.length;
+  
+  if (currentPage > pageCount) {
+    return elements.slice(pageBreakIndices[pageCount - 1]).map(el => el.outerHTML).join('');
+  }
+  
+  if (currentPage === 1) {
+    if (pageBreakIndices[0] === 0) {
+      const endIndex = pageBreakIndices.length > 1 ? pageBreakIndices[1] : elements.length;
+      return elements.slice(0, endIndex).map(el => el.outerHTML).join('');
+    } else {
+      return elements.slice(0, pageBreakIndices[0]).map(el => el.outerHTML).join('');
+    }
+  } 
+  
+  const startIndex = pageBreakIndices[currentPage - 1];
+  const endIndex = currentPage < pageCount ? pageBreakIndices[currentPage] : elements.length;
+  
+  return elements.slice(startIndex, endIndex).map(el => el.outerHTML).join('');
 }
 
-const hasNextPage = (content, currentPage, pageSize) => {
-  const totalLength = content.length;
-  return (currentPage * pageSize) < totalLength;
+const hasNextPage = (content, currentPage) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(content, 'text/html');
+  const elements = Array.from(doc.body.children);
+  
+  const pageBreakIndices = [];
+  elements.forEach((element, index) => {
+    if (element.tagName === 'H3') {
+      pageBreakIndices.push(index);
+    }
+  });
+  
+  if (pageBreakIndices.length === 0) {
+    const elementsPerPage = 3;
+    return elements.length > currentPage * elementsPerPage;
+  }
+  
+  const firstPageBeforeH3 = pageBreakIndices[0] > 0;
+  const totalPages = firstPageBeforeH3 ? pageBreakIndices.length + 1 : pageBreakIndices.length;
+  
+  return currentPage < totalPages;
 }
 
 const ArticleDetail = () => {
   const [articleId, setArticleId] = useState(1)
   const [favorites, setFavorites] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
-  const pageSize = 500 
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
@@ -170,12 +207,138 @@ const ArticleDetail = () => {
         <p>Talk to someone you trust: Whether it's a family member, friend, teacher, or counsellor - sharing your experience helps.</p>
       `,
     },
+
+    4: {
+      title: "Self-confidence",
+      images: [
+        'articles/self_confidence/image1.svg',
+        'articles/self_confidence/image2.svg',
+        'articles/self_confidence/image3.svg'
+      ],
+      date: "March 25, 2025",
+      tags: ["racism"],
+      content: `
+
+        <h3>This can help if:</h3>
+
+        <p>You feel unsure about yourself.</p>
+        
+        <p>You find it hard to speak up or try new things.</p>
+
+        <p>You compare yourself to others and feel "not good enough"</p>
+
+        <p>You want practical ways to build your confidence</p>
+
+        <h3>What's the problem?</h3>
+        
+        <p>Self-confidence can drop for lots of reasons-like being judged, past failures, or constantly comparing yourself to others (especially on social media). You might doubt your abilities, avoid risks, or stay quiet in groups even when you have something to say. This can leave you feeling stuck, invisible, or not good enough.</p>
+        
+        <h3>How to overcome:</h3>
+        
+        <p>List your wins: Write down things yo've achieved or moments you're proud of.</p>
+        
+        <p>Know your strengths: Everyone's good at something-identify yours and focus on them.</p>
+        
+        <p>Set small goals: Achieve little things that build momentum and belief in yourself.</p>
+
+        <p>Change your self-talk: Speak to yourself with kindness, like you would to a best friend.</p>
+
+        <p>Do what you enjoy: Hobbies and passions help build skills and confidence.</p>
+
+        <p>Stop comparing: Especially online-what you see is usually just the highlight reel.</p>
+
+        <p>Talk to someone: A friend, mentor, or counsellor can help you see yourself clearly.</p>
+
+        <h3>The result:</h3>
+
+        <p>You'll feel more in control, more capable, and more proud of who you are. You'll be more likely to try new things, bounce back from mistakes, and feel confident in your own skin-even when things aren't perfect. Building confidence is a journey, but every step makes a difference.</p>
+      `,
+    },
+
+    5: {
+      title: "Talk to others",
+      images: [
+        'articles/racism/image1.svg',
+        'articles/racism/image2.svg',
+        'articles/racism/image3.svg'
+      ],
+      date: "March 25, 2025",
+      tags: ["racism"],
+      content: `
+
+        <h3>This can help if:</h3>
+
+        <p>You're feeling stressed, overwhelmed, or down</p>
+        
+        <p>You're going through a tough time and don't know what to do</p>
+
+        <p>You feel alone or like no one understands</p>
+
+        <p>You need to let something out but don't want to be judged</p>
+
+        <h3>What's the problem?</h3>
+        
+        <p>When you're struggling, keeping things bottled up can make problems feel heavier and more overwhelming. You might feel isolated or like no one would understand. Trying to deal with everything alone can increase stress, anxiety, and sadness, and might stop you from finding a way forward.</p>
+        
+        <h3>How to overcome:</h3>
+        
+        <p>Talk to someone you trust: This could be a friend, family member, mentor, teacher, counsellor, or support worker.</p>
+        
+        <p>Let it out: Sometimes, you just need to vent without expecting advice or solutions.</p>
+        
+        <p>Pick someone outside the situation: They can offer a fresh point of view and might help you see things differently.</p>
+
+        <p>Start small: If talking feels scary, you can write down your thoughts first, or talk through text/chat services.</p>
+
+        <p>Use support services: Platforms like ReachOut, Headspace, or Lifeline offer anonymous, non-judgemental help.</p>
+
+
+        <h3>The result:</h3>
+
+        <p>You'll feel lighter, more understood, and less alone. Talking can help you make sense of what you're going through, reduce your stress, and break big problems into smaller, more manageable pieces. It can also lead to support, connection, and ideas you might not have thought of on your own. You don't have to go through it alone-talking is a strength, not a weakness.</p>
+      `,
+    },
+
+    6: {
+      title: "Online gaming against real life",
+      images: [
+        'articles/online_gaming_against_real_life/image1.svg',
+        'articles/online_gaming_against_real_life/image2.svg',
+        'articles/online_gaming_against_real_life/image3.svg'
+      ],
+      tags: ["Online_Gaming"],
+      content: `
+
+        <h3>This can help if:</h3>
+
+        <p>You think gaming is taking over your life.</p>
+        <p>You're feeling distant from family, friends, or school.</p>
+        <p>You use games to escape real-life stress.</p>
+        <p>You want to know the signs of gaming addiction.</p>
+
+
+        <h3>Explanation of problem:</h3>
+        
+        <p>Gaming can be fun and social, but sometimes it goes too far. If it starts to affect your health, sleep, school, relationships, or emotions, it might be more than just a hobby. </p>
+        <p>Some games are built to keep you playing, and it's easy to lose track of time and real-life priorities.</p>
+
+      
+        <h3>How to overcome:</h3>
+        
+        <p>Notice the signs-like playing even when it's not fun anymore, hiding how much you play, or feeling upset when you can't play</p>
+        <p>Set limits on how long you play each day</p>
+        <p>Make time for other activities-like hanging out with friends, sports, or creative hobbies</p>
+        <p>Talk to someone if you're struggling to balance gaming and real life-family, a teacher, or a counsellor</p>
+      `,
+    },
+
+
   }
 
   
   const handleNextPage = () => {
     const article = articlesDatabase[articleId];
-    if (hasNextPage(article.content, currentPage, pageSize)) {
+    if (hasNextPage(article.content, currentPage)) {
       setCurrentPage(prev => prev + 1);
       
       setCurrentImageIndex(prev => (prev + 1) % article.images.length);
@@ -277,7 +440,7 @@ const ArticleDetail = () => {
                 <div className="article-body-container position-relative">
                   <div className="article-body" 
                     dangerouslySetInnerHTML={{ 
-                      __html: paginateContent(article.content, currentPage, pageSize)
+                      __html: paginateContent(article.content, currentPage)
                     }} 
                   />
                   
@@ -305,7 +468,7 @@ const ArticleDetail = () => {
                     <button 
                       className="btn btn-outline-primary"
                       onClick={handleNextPage}
-                      disabled={!hasNextPage(article.content, currentPage, pageSize)}
+                      disabled={!hasNextPage(article.content, currentPage)}
                     >
                       Next <i className="bi bi-chevron-right"></i>
                     </button>

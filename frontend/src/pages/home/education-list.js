@@ -39,24 +39,33 @@ const EducationList = () => {
       category: "Awareness",
       tags: ["racism"]
     },
-    // {
-    //   id: 4,
-    //   title: "Self_Confidence",
-    //   excerpt: "Self_Confidence",
-    //   image: "/edu.jpg",
-    //   overlayColor: "blue-overlay",
-    //   date: "March 20, 2025",
-    //   category: "Technology",
-    // },
-    // {
-    //   id: 5,
-    //   title: "Talking to others",
-    //   excerpt: "Talking to others",
-    //   image: "/edu.jpg",
-    //   overlayColor: "green-overlay",
-    //   date: "March 15, 2025",
-    //   category: "Inclusive Learning",
-    // },
+    {
+      id: 4,
+      title: "Self_Confidence",
+      excerpt: "Self_Confidence",
+      image: "articles/self_confidence/image1.svg",
+      overlayColor: "blue-overlay",
+      date: "March 20, 2025",
+      category: "Technology",
+    },
+    {
+      id: 5,
+      title: "Talking to others",
+      excerpt: "Talking to others",
+      image: "articles/talk_to_other/image1.svg",
+      overlayColor: "green-overlay",
+      date: "March 15, 2025",
+      category: "Inclusive Learning",
+    },
+    {
+      id: 6,
+      title: "Online gaming against real life",
+      excerpt: "Online gaming against real life",
+      image: "articles/online_gaming_against_real_life/image1.svg",
+      overlayColor: "blue-overlay",
+      date: "March 02, 2025",
+      category: "Inclusive Learning",
+    },
   ]
 
   useEffect(() => {
