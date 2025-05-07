@@ -181,14 +181,36 @@ def create_app():
         return jsonify({
             "eventList": [event.to_dict() for event in events]
         })
-    with app.app_context():
-        # db.create_all()
-        # print("Database tables created successfully")
+    
+    @app.route('/api/update-events', methods=['GET'])
+    def update_events_route():
+        try:
+            # from backend.routes.update_events import should_update, fetch_and_store_events
 
-        if should_update():
-            fetch_and_store_events()
-        else:
-            print("Event data already up to date.")
+            from datetime import date
+            from backend.models.models import EventUpdateStatus
+            
+            status = EventUpdateStatus.query.first()
+            need_update = True if not status else status.last_updated != date.today()
+            
+            if need_update:
+                fetch_and_store_events()
+                return jsonify({"message": "Events updated successfully"})
+            else:
+                return jsonify({"message": "Events already up to date"})
+        except Exception as e:
+            import traceback
+            error_details = traceback.format_exc()
+            print(f"Error in update_events_route: {error_details}")
+            return jsonify({"error": str(e)}), 500
+    # with app.app_context():
+    #     # db.create_all()
+    #     # print("Database tables created successfully")
+
+    #     if should_update():
+    #         fetch_and_store_events()
+    #     else:
+    #         print("Event data already up to date.")
 
     return app
 
