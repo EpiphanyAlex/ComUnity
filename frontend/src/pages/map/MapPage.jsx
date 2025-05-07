@@ -14,7 +14,7 @@ import { fetchAndStore } from "../utils/fetch";
 function MapPage() {
   async function loadEvents() {
     try {
-      const data = await fetchAndStore("http://127.0.0.1:5000/events");
+      const data = await fetchAndStore("/events");
       console.log("Events Loaded:", data);
       const temp = getEventList();
       console.log("Fetch eventList", temp);
@@ -85,7 +85,7 @@ function MapPage() {
   const [playgrounds, setPlaygrounds] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/playgrounds")
+    fetch("/api/playgrounds")
       .then((res) => res.json())
       .then((data) => {
         console.log("Playground API data:", data);
@@ -107,7 +107,7 @@ function MapPage() {
   const [orderBy, setOrderBy] = useState("Latest");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/features")
+    fetch("/api/features")
       .then((res) => res.json())
       .then((data) => {
 
